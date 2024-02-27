@@ -13,8 +13,7 @@ import {
 type TLanguage = 'EN' | 'PT'
 
 export default function LanguageToggle() {
-  const storedLanguage = window.localStorage.getItem('language') as TLanguage
-  const [language, setLanguage] = useState<TLanguage>(storedLanguage || 'EN')
+  const [language, setLanguage] = useState<TLanguage>('EN')
 
   const handleLanguageChange = (selectedLanguage: TLanguage) => { 
     setLanguage(selectedLanguage)
@@ -22,6 +21,8 @@ export default function LanguageToggle() {
   }
 
   useEffect(() => {
+     const storedLanguage = window.localStorage.getItem('language') as TLanguage
+
     if (storedLanguage) {
       setLanguage(storedLanguage)
     }

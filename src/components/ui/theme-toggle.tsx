@@ -17,8 +17,8 @@ import {
 type TThemes = 'dark' | 'light' | 'system' 
 
 export default function ThemeToggle() {
-  const storedTheme = window.localStorage.getItem('theme') as TThemes
-  const [theme, setTheme] = useState<TThemes>(storedTheme || 'system');
+  
+  const [theme, setTheme] = useState<TThemes>('system');
 
   const handleToggleTheme = (value: TThemes) => {
     const root = window.document.documentElement
@@ -41,6 +41,8 @@ export default function ThemeToggle() {
   }
   
   useEffect(() => {
+    const storedTheme = window.localStorage.getItem('theme') as TThemes
+
     if (storedTheme) {
       setTheme(storedTheme)
     }
