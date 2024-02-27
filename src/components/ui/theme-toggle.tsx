@@ -17,7 +17,8 @@ import {
 type TThemes = 'dark' | 'light' | 'system' 
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<TThemes>('system');
+  const storedTheme = window.localStorage.getItem('theme') as TThemes
+  const [theme, setTheme] = useState<TThemes>(storedTheme || 'system');
 
   const handleToggleTheme = (value: TThemes) => {
     const root = window.document.documentElement
@@ -40,15 +41,14 @@ export default function ThemeToggle() {
   }
   
   useEffect(() => {
-    const storedTheme = window.localStorage.getItem('theme')
     if (storedTheme) {
-      setTheme(storedTheme as TThemes)
+      setTheme(storedTheme)
     }
   }, [])
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 p-2 rounded-md">
+      <DropdownMenuTrigger className="flex items-center justify-center outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 p-2 w-12 rounded-md">
         {theme === 'dark'
           ? (<IconMoonStars width={25} />)
           : theme === 'light' ? (<IconSunWind width={25} />)
