@@ -17,13 +17,13 @@ export const metadata: Metadata = {
   }
 }
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
   weight: ['300', '400', '500', '700', '900']
 })
 
-export const fontMono = FontMono({
+const fontMono = FontMono({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ['200', '300', '400',]

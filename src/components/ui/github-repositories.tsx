@@ -49,6 +49,13 @@ import {
 
 import maspImage from '@/public/masp.png'
 
+type TechnologyIcons = {
+  [key: string]: {
+    Icon: React.ComponentType<{ className: string, width: number }>;
+    color: string;
+  };
+};
+
 export default function GitHubRepositories() {
   const apiRepositories = [
     {
@@ -105,7 +112,7 @@ export default function GitHubRepositories() {
     setRepositories(apiRepositories)
   }, [])
 
-  const technologiesIcon = {
+  const technologiesIcon: TechnologyIcons = {
     ['ReactJS']: {
       Icon: IconBrandReact,
       color: 'text-blue-300',
@@ -186,7 +193,7 @@ export default function GitHubRepositories() {
                   
                     <span className="flex gap-5">
                       {(techs as string[]).map((tech, index) => {
-                      const { Icon, color } = technologiesIcon[tech as never]
+                        const { Icon, color } = technologiesIcon[tech]
 
                         return (
                           <div key={index}>
@@ -231,7 +238,8 @@ export default function GitHubRepositories() {
                           <DrawerTitle className="mb-5 text-4xl">{name}</DrawerTitle>
                             <span className="flex gap-5 my-3">
                               {(techs as string[]).map((tech, index) => {
-                              const { Icon, color } = technologiesIcon[tech as never]
+                                const { Icon, color } = technologiesIcon[tech]
+                                
                                 return (
                                   <div key={index}>
                                     <TooltipProvider>
