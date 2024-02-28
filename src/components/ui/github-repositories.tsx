@@ -222,6 +222,7 @@ export default function GitHubRepositories() {
           }
           
         })
+        .filter((repository: Repositories) => repository)
         .sort((a: Repositories, b: Repositories) => a.stars - b.stars)
         .reverse()
       
