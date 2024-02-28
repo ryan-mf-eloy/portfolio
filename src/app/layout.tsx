@@ -1,6 +1,7 @@
 import "@/styles/globals.css"
 import { cn } from "@/lib/utils"
 import { Metadata } from "next"
+import { Analytics } from '@vercel/analytics/react';
 import { Roboto as FontSans, Roboto_Mono as FontMono } from "next/font/google"
 
 import { ThemeProvider } from "@/components/theme-provider"
@@ -51,7 +52,8 @@ export default function RootLayout(
               enableSystem
               disableTransitionOnChange
           >
-            { children }
+            {children}
+            <Analytics />
             </ThemeProvider>
         </LanguageProvider>
       </body>
