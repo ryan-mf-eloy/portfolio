@@ -52,7 +52,9 @@ import {
   IconBrandGoogle,
   IconBrandLinqpad,
   IconBrandStripe,
-  IconBrandAzure
+  IconBrandAzure,
+  IconBrandHtml5,
+  IconBrandVscode
 } from '@tabler/icons-react'
 
 type TechnologyData = {
@@ -75,6 +77,14 @@ interface Repositories {
 
 export default function GitHubRepositories() {
   const technologiesData: TechnologyData = {
+    'html': {
+      Icon: IconBrandHtml5,
+      color: 'text-orange-500',
+    },
+    'vscode': {
+      Icon: IconBrandVscode,
+      color: 'text-blue-700',
+    },
     'reactjs': {
       Icon: IconBrandReact,
       color: 'text-blue-300',
