@@ -393,7 +393,7 @@ export default function GitHubRepositories() {
                         <div>
                         <Image
                           className="max-lg:max-w-96 max-sm:px-2"
-                          src={projectImage} alt={name} width={600} height={600}
+                          src={projectImage} alt={name} width={1500} height={1500}
                         />
                         </div>
                       </DrawerHeader>
