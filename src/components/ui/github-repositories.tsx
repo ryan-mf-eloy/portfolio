@@ -54,7 +54,8 @@ import {
   IconBrandStripe,
   IconBrandAzure,
   IconBrandHtml5,
-  IconBrandVscode
+  IconBrandVscode,
+  IconBrandVite
 } from '@tabler/icons-react'
 
 type TechnologyData = {
@@ -80,6 +81,14 @@ export default function GitHubRepositories() {
     'html': {
       Icon: IconBrandHtml5,
       color: 'text-orange-500',
+    },
+    'vite': {
+      Icon: IconBrandVite,
+      color: 'text-violet-400',
+    },
+    'vitest': {
+      Icon: IconBrandVite,
+      color: 'text-green-400',
     },
     'vscode': {
       Icon: IconBrandVscode,
