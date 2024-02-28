@@ -195,17 +195,23 @@ export default function GitHubRepositories() {
   useEffect(() => {
     if (data && !data?.message) {
       const builtRepositories: Repositories[] = data
-        .map((gitHubResponse: any) => (
-          {
-            name: gitHubResponse.name,
-            url: gitHubResponse.html_url,
-            stars: gitHubResponse.stargazers_count,
-            techs: gitHubResponse.topics,
-            description: gitHubResponse.description,
-            projectLink: gitHubResponse.homepage,
-            projectImage: `https://raw.githubusercontent.com/ryan-mf-eloy/${gitHubResponse.name}/master/preview.png`,
-            status: gitHubResponse.topics.includes('completed') ? 'completed' : 'developing'
-          }))
+        .map((gitHubResponse: any) => {
+          const isIndexRepository = !gitHubResponse.topics.includes('index')
+
+          if (isIndexRepository) {
+            return  {
+              name: gitHubResponse.name,
+              url: gitHubResponse.html_url,
+              stars: gitHubResponse.stargazers_count,
+              techs: gitHubResponse.topics,
+              description: gitHubResponse.description,
+              projectLink: gitHubResponse.homepage,
+              projectImage: `https://raw.githubusercontent.com/ryan-mf-eloy/${gitHubResponse.name}/master/preview.png`,
+              status: gitHubResponse.topics.includes('completed') ? 'completed' : 'developing'
+            }
+          }
+          
+        })
         .sort((a: Repositories, b: Repositories) => a.stars - b.stars)
         .reverse()
       
