@@ -392,7 +392,7 @@ export default function GitHubRepositories() {
                         </div>
                         <div>
                         <Image
-                          className="max-w-600 w-full max-lg:max-w-96 max-sm:px-2"
+                          className="max-w-[600px] w-full max-lg:max-w-96 max-sm:px-2"
                           src={projectImage} alt={name} width={1500} height={1500}
                         />
                         </div>
