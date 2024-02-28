@@ -1,8 +1,10 @@
 import "@/styles/globals.css"
 import { cn } from "@/lib/utils"
 import { Metadata } from "next"
-import { ThemeProvider } from "@/components/theme-provider"
 import { Roboto as FontSans, Roboto_Mono as FontMono } from "next/font/google"
+
+import { ThemeProvider } from "@/components/theme-provider"
+import LanguageProvider from "@/context/language-provider"
 
 export const metadata: Metadata = {
   title: 'Ryan Eloy | Portfolio',
@@ -42,14 +44,16 @@ export default function RootLayout(
           fontMono.variable,
         )}
       >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-        >
-          { children }
-        </ThemeProvider>
+        <LanguageProvider>
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+          >
+            { children }
+            </ThemeProvider>
+        </LanguageProvider>
       </body>
     </html>
   )

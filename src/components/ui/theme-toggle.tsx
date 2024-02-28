@@ -1,4 +1,5 @@
 'use client'
+
 import { useState, useEffect } from "react";
 import {
   DropdownMenu,
@@ -11,13 +12,11 @@ import {
 import {
   IconMoonStars,
   IconSunWind,
-  IconDeviceDesktop
 } from '@tabler/icons-react'
 
 type TThemes = 'dark' | 'light' | 'system' 
 
 export default function ThemeToggle() {
-  
   const [theme, setTheme] = useState<TThemes>('system');
 
   const handleToggleTheme = (value: TThemes) => {
@@ -51,10 +50,9 @@ export default function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center justify-center outline-none hover:bg-zinc-100 dark:hover:bg-zinc-900 p-2 w-12 rounded-md">
-        {theme === 'dark'
+        {theme !== 'light'
           ? (<IconMoonStars width={25} />)
-          : theme === 'light' ? (<IconSunWind width={25} />)
-          : (<IconDeviceDesktop width={25} />)
+          : (<IconSunWind width={25} />)
         }
     </DropdownMenuTrigger>
     <DropdownMenuContent>
