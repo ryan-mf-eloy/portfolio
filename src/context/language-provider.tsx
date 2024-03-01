@@ -1,28 +1,32 @@
-'use client'
+"use client";
 
-import { createContext, useContext, useState, useEffect } from 'react';
-import { TLanguage } from '../components/ui/language-toggle';
+import { createContext, useContext, useState, useEffect } from "react";
+import { type TLanguage } from "../components/ui/language-toggle";
 
-type LanguageContextType = {
+interface LanguageContextType {
   language: TLanguage;
   setLanguage: React.Dispatch<React.SetStateAction<TLanguage>>;
-};
+}
 
 const LanguageContext = createContext<LanguageContextType>({
-  language: 'en',
-  setLanguage: () => {}
+  language: "en",
+  setLanguage: () => {},
 });
 
-export default function LanguageProvider({ children }: { children: React.ReactNode}) {
-  const [language, setLanguage] = useState<TLanguage>('en');
+export default function LanguageProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [language, setLanguage] = useState<TLanguage>("en");
 
   useEffect(() => {
-    const storedLanguage = window.localStorage.getItem('language') as TLanguage
+    const storedLanguage = window.localStorage.getItem("language") as TLanguage;
 
-   if (storedLanguage) {
-     setLanguage(storedLanguage)
-   }
- }, [setLanguage])
+    if (storedLanguage) {
+      setLanguage(storedLanguage);
+    }
+  }, [setLanguage]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage }}>

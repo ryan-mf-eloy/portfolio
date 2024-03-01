@@ -1,6 +1,5 @@
 "use client";
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { motion, useAnimation } from "framer-motion";
@@ -8,7 +7,7 @@ import type { Container } from "@tsparticles/engine";
 import { loadSlim } from "@tsparticles/slim";
 import { cn } from "@/lib/utils";
 
-type ParticlesProps = {
+interface ParticlesProps {
   id?: string;
   className?: string;
   background?: string;
@@ -18,7 +17,7 @@ type ParticlesProps = {
   speed?: number;
   particleColor?: string;
   particleDensity?: number;
-};
+}
 export default function SparklesCore(props: ParticlesProps) {
   const {
     id,
@@ -38,6 +37,7 @@ export default function SparklesCore(props: ParticlesProps) {
       setInit(true);
     });
   }, []);
+
   const controls = useAnimation();
 
   const particlesLoaded = async (container?: Container) => {
@@ -55,13 +55,13 @@ export default function SparklesCore(props: ParticlesProps) {
     <motion.div animate={controls} className={cn("opacity-0", className)}>
       {init && (
         <Particles
-          id={id || "tsparticles"}
+          id={id ?? "tsparticles"}
           className={cn("h-full w-full")}
           particlesLoaded={particlesLoaded}
           options={{
             background: {
               color: {
-                value: background || "#0d47a1",
+                value: background ?? "#0d47a1",
               },
             },
             fullScreen: {
@@ -122,7 +122,7 @@ export default function SparklesCore(props: ParticlesProps) {
                 },
               },
               color: {
-                value: particleColor || "#ffffff",
+                value: particleColor ?? "#ffffff",
                 animation: {
                   h: {
                     count: 0,
@@ -230,7 +230,7 @@ export default function SparklesCore(props: ParticlesProps) {
                   mode: "delete",
                   value: 0,
                 },
-                value: particleDensity || 120,
+                value: particleDensity ?? 120,
               },
               opacity: {
                 value: {
@@ -240,7 +240,7 @@ export default function SparklesCore(props: ParticlesProps) {
                 animation: {
                   count: 0,
                   enable: true,
-                  speed: speed || 4,
+                  speed: speed ?? 4,
                   decay: 0,
                   delay: 0,
                   sync: false,
@@ -269,8 +269,8 @@ export default function SparklesCore(props: ParticlesProps) {
               },
               size: {
                 value: {
-                  min: minSize || 1,
-                  max: maxSize || 3,
+                  min: minSize ?? 1,
+                  max: maxSize ?? 3,
                 },
                 animation: {
                   count: 0,
@@ -431,4 +431,4 @@ export default function SparklesCore(props: ParticlesProps) {
       )}
     </motion.div>
   );
-};
+}

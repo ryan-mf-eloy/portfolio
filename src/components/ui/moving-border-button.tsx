@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useRef } from "react";
 import {
   motion,
   useAnimationFrame,
@@ -7,7 +7,6 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion";
-import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
 export default function MovingBorderButton({
@@ -33,18 +32,16 @@ export default function MovingBorderButton({
     <Component
       className={cn(
         "bg-transparent relative text-xl h-14 w-44 p-[3px] overflow-hidden rounded-md flex items-center justify-center",
-        containerClassName
+        containerClassName,
       )}
       {...otherProps}
     >
-      <div
-        className="absolute inset-0"
-      >
+      <div className="absolute inset-0">
         <MovingBorder duration={duration} rx="30%" ry="30%">
           <div
             className={cn(
               "h-20 w-20 opacity-[1] bg-[radial-gradient(var(--rose-500)_20%,var(--yellow-500)_70%,transparent_10%)]",
-              borderClassName
+              borderClassName,
             )}
           />
         </MovingBorder>
@@ -53,7 +50,7 @@ export default function MovingBorderButton({
       <div
         className={cn(
           "relative bg-white/[0.8] hover:bg-zinc-200/[0.8] text-black dark:text-primary dark:bg-zinc-950/[0.8] border border-zinc-500 backdrop-blur-xl flex items-center justify-center w-full h-full text-sm antialiased rounded-md dark:hover:bg-zinc-900/[0.8] transition-[2000ms]",
-          className
+          className,
         )}
       >
         {children}
@@ -88,11 +85,11 @@ export const MovingBorder = ({
 
   const x = useTransform(
     progress,
-    (val) => pathRef.current?.getPointAtLength(val).x
+    (val) => pathRef.current?.getPointAtLength(val).x,
   );
   const y = useTransform(
     progress,
-    (val) => pathRef.current?.getPointAtLength(val).y
+    (val) => pathRef.current?.getPointAtLength(val).y,
   );
 
   const transform = useMotionTemplate`translateX(${x}px) translateY(${y}px) translateX(-50%) translateY(-50%)`;
