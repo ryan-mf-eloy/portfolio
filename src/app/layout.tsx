@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { Roboto as FontSans, Roboto_Mono as FontMono } from "next/font/google";
 
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider, NextThemeProvider } from "@/context/theme-provider";
 import LanguageProvider from "@/context/language-provider";
 
 const fontSans = FontSans({
@@ -36,14 +36,17 @@ export default function RootLayout({
         )}
       >
         <LanguageProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-            <Analytics />
+          <ThemeProvider>
+            <NextThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              storageKey="theme"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Analytics />
+            </NextThemeProvider>
           </ThemeProvider>
         </LanguageProvider>
       </body>

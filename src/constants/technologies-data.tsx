@@ -27,17 +27,16 @@ import {
   IconBrandGoogle,
   IconBrandTerraform,
   IconBrandAzure,
+  IconBrandStorybook,
 } from "@tabler/icons-react";
 
-export type TechnologyData = Record<
-  string,
-  {
-    Icon: React.ComponentType<{ className: string; size: number }>;
-    color: string;
-  }
->;
+export type TechnologyData = typeof technologiesData;
 
-export const technologiesData: TechnologyData = {
+export const technologiesData = {
+  storybook: {
+    Icon: IconBrandStorybook,
+    color: "text-rose-600",
+  },
   "github-actions": {
     Icon: IconBrandGithub,
     color: "text-zinc-400",
@@ -158,4 +157,4 @@ export const technologiesData: TechnologyData = {
     Icon: IconBrandAzure,
     color: "text-blue-600",
   },
-};
+} as const;

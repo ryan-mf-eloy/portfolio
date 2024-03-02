@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useLanguage } from "@/context/language-provider";
+import { useTheme } from "@/context/theme-provider";
 
 import {
   DropdownMenu,
@@ -13,11 +13,11 @@ import {
 
 import { IconMoonStars, IconSunWind } from "@tabler/icons-react";
 
-type TThemes = "dark" | "light" | "system";
+export type TThemes = "dark" | "light" | "system";
 
 export default function ThemeToggle() {
   const { language } = useLanguage();
-  const [theme, setTheme] = useState<TThemes>("system");
+  const { theme, setTheme } = useTheme();
 
   const handleToggleTheme = (value: TThemes) => {
     const root = window.document.documentElement;
@@ -38,14 +38,6 @@ export default function ThemeToggle() {
     setTheme(value);
     window.localStorage.setItem("theme", value);
   };
-
-  useEffect(() => {
-    const storedTheme = window.localStorage.getItem("theme") as TThemes;
-
-    if (storedTheme) {
-      setTheme(storedTheme);
-    }
-  }, []);
 
   return (
     <DropdownMenu>
