@@ -1,15 +1,16 @@
 "use client";
 
 import { useLanguage } from "@/context/language-provider";
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
 import { motion } from "framer-motion";
 import useSWR from "swr";
 
+import Badge from "@/components/ui/badge";
 import Button from "@/components/ui/button";
 import Avatar from "@/components/ui/avatar";
 import Social from "@/components/ui/social";
-import ThemeToggle from "@/components/ui/theme-toggle";
-import LanguageToggle from "@/components/ui/language-toggle";
+import Header from "@/components/ui/header";
+import ProjectsFilter from "@/components/ui/projects-filter";
 import RepositoryItem from "@/components/ui/repository-item";
 // import CertificationTag from "@/components/ui/certification-tag";
 import MovingBorderButton from "@/components/ui/moving-border-button";
@@ -20,6 +21,7 @@ import {
   IconDownload,
   IconChevronRight,
   IconChevronLeft,
+  IconX,
 } from "@tabler/icons-react";
 
 export interface Repository {
@@ -84,7 +86,9 @@ export default function Home() {
   useEffect(() => {
     const isTouchDevice = window.innerWidth <= 1024;
     setIsMobile(isTouchDevice);
+  }, []);
 
+  useEffect(() => {
     const isValidData = data && !data?.message;
 
     if (isValidData) {
@@ -119,6 +123,43 @@ export default function Home() {
     }
   }, [data]);
   /**
+   * Filter
+   */
+  const [selectedTechs, setSelectedTechs] = useState<string[]>([]);
+
+  const handleSelection = (
+    event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
+  ) => {
+    const selectedTech = (event.target as HTMLInputElement).dataset.value;
+
+    if (selectedTech) {
+      setSelectedTechs((prevState) => {
+        const techAlreadySelected = prevState.includes(selectedTech);
+
+        if (techAlreadySelected) {
+          return prevState.filter((tech) => tech !== selectedTech);
+        }
+        return [...prevState, selectedTech];
+      });
+    }
+  };
+
+  const handleRemoveSelection = (selection: string) => {
+    setSelectedTechs((prevState) => {
+      const techAlreadySelected = prevState.includes(selection);
+
+      if (techAlreadySelected) {
+        return prevState.filter((tech) => tech !== selection);
+      }
+
+      return prevState;
+    });
+  };
+
+  const handleClearSelection = () => {
+    setSelectedTechs([]);
+  };
+  /**
    * Pagination
    */
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -128,6 +169,11 @@ export default function Home() {
   const begin = currentPage === 1 ? 0 : end - MAX_RESULTS_PER_PAGE;
   const totalPages = Math.ceil(repositories.length / MAX_RESULTS_PER_PAGE);
   const paginatedRepositories = repositories.slice(begin, end);
+  const filteredRepositories = paginatedRepositories.filter((repository) =>
+    selectedTechs.length
+      ? repository.techs.some((tech) => selectedTechs.includes(tech))
+      : repository,
+  );
 
   const handlePrevPage = () => {
     if (currentPage >= 2) {
@@ -143,12 +189,9 @@ export default function Home() {
 
   return (
     <>
-      <header className="flex flex-row items-center justify-end px-10 py-4 w-full max-h-32">
-        <ThemeToggle />
-        <LanguageToggle />
-      </header>
+      <Header className="absolute" />
 
-      <main>
+      <main className="flex items-center jutify-center min-h-screen max-xl:pt-8">
         <section className="flex flex-row items-center justify-center gap-80 w-full max-xl:flex-col max-xl:gap-10">
           <div className="max-w-[30vw] flex flex-col items-start justify-center max-sm:px-5 max-xl:max-w-full">
             <h3 className="text-lg pb-5">
@@ -199,9 +242,52 @@ export default function Home() {
                 {"}"}
               </span>
             </h2>
-            <small className="text-zinc-400 flex mb-1">
-              {language === "en" ? "From GitHub API" : "Da API do GitHub"}
-            </small>
+
+            <div className="mb-2 max-[420px]:m-0 max-sm:mt-5 flex items-center justify-between w-full max-sm:flex-col max-sm:items-start">
+              <ProjectsFilter
+                selectedTechs={selectedTechs}
+                handleSelection={handleSelection}
+              />
+
+              <small className="text-zinc-400 flex text-[0.7rem] max-sm:mb-2 max-sm:mt-5">
+                {language === "en" ? "From GitHub API" : "Da API do GitHub"}
+              </small>
+            </div>
+
+            <div className="flex gap-2 mb-2 w-full">
+              <div className="w-full max-w-[25rem] max-sm:max-w-[18rem] rounded-sm py-2 px-1 flex gap-2 no-visible-scrollbar overflow-scroll">
+                {selectedTechs.map((techSelected) => (
+                  <Badge
+                    key={techSelected}
+                    variant="outline"
+                    className="min-w-fit justify-between items-center gap-2 truncate"
+                  >
+                    {techSelected}
+                    <div>
+                      <IconX
+                        onClick={() => {
+                          handleRemoveSelection(techSelected);
+                        }}
+                        size={15}
+                        className="cursor-pointer hover:text-rose-500"
+                      />
+                    </div>
+                  </Badge>
+                ))}
+              </div>
+
+              {selectedTechs.length > 0 && (
+                <div className="flex-1">
+                  <Button
+                    onClick={handleClearSelection}
+                    size="sm"
+                    variant="secondary"
+                  >
+                    Clear
+                  </Button>
+                </div>
+              )}
+            </div>
 
             <div className="max-h-[30rem] h-[30rem] max-xl:mb-10 w-full max-w-[30rem] flex flex-col justify-between">
               <motion.ul
@@ -225,7 +311,7 @@ export default function Home() {
                   />
                 )}
 
-                {paginatedRepositories.map((repository, index) => (
+                {filteredRepositories.map((repository, index) => (
                   <RepositoryItem
                     key={repository.id}
                     repository={repository}
@@ -243,7 +329,7 @@ export default function Home() {
                 ))}
               </motion.ul>
 
-              <div className="flex items-center justify-between max-sm:mt-20">
+              <div className="flex items-center justify-between max-sm:mt-20 max-sm:pb-5">
                 <div className="flex items-center justify-start gap-2">
                   <Button
                     onClick={handlePrevPage}
