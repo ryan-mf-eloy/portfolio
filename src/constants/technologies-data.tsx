@@ -27,6 +27,7 @@ import {
   IconBrandGoogle,
   IconBrandTerraform,
   IconBrandAzure,
+  IconBrandRust,
 } from "@tabler/icons-react";
 
 export type TechnologyData = Record<
@@ -38,6 +39,10 @@ export type TechnologyData = Record<
 >;
 
 export const technologiesData: TechnologyData = {
+  rust: {
+    Icon: IconBrandRust,
+    color: "text-red-500",
+  },
   "github-actions": {
     Icon: IconBrandGithub,
     color: "text-zinc-400",

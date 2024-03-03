@@ -264,6 +264,14 @@ export default function ProjectsFilter({
             >
               Javascript
             </MenubarItem>
+            <MenubarItem
+              className={getCustomSelectedOptionStyle("rust")}
+              data-value="rust"
+              onClick={handleSelection}
+            >
+              Rust
+              {handleItemStatus("to study")}
+            </MenubarItem>
             <MenubarSeparator />
             <MenubarLabel className="text-zinc-500">SQL</MenubarLabel>
             <MenubarItem
