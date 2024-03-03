@@ -168,12 +168,14 @@ export default function Home() {
   const end = currentPage * MAX_RESULTS_PER_PAGE;
   const begin = currentPage === 1 ? 0 : end - MAX_RESULTS_PER_PAGE;
   const totalPages = Math.ceil(repositories.length / MAX_RESULTS_PER_PAGE);
-  const paginatedRepositories = repositories.slice(begin, end);
-  const filteredRepositories = paginatedRepositories.filter((repository) =>
+
+  const filteredRepositories = repositories.filter((repository) =>
     selectedTechs.length
       ? repository.techs.some((tech) => selectedTechs.includes(tech))
       : repository,
   );
+
+  const paginatedRepositories = filteredRepositories.slice(begin, end);
 
   const handlePrevPage = () => {
     if (currentPage >= 2) {
@@ -311,7 +313,7 @@ export default function Home() {
                   />
                 )}
 
-                {filteredRepositories.map((repository, index) => (
+                {paginatedRepositories.map((repository, index) => (
                   <RepositoryItem
                     key={repository.id}
                     repository={repository}

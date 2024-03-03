@@ -223,7 +223,7 @@ export default function ProjectsFilter({
 
       <MenubarMenu>
         <MenubarTrigger className="hover:bg-zinc-900 cursor-pointer transition-[2000ms] max-[400px]:text-[0.7rem]">
-          Technologies
+          {language === "en" ? "Technologies" : "Tecnologias"}
         </MenubarTrigger>
         <MenubarContent className="backdrop-blur-md bg-white/50 dark:bg-black/70">
           <div className="max-h-[25rem] overflow-auto overflow-x-hidden [&>div]:cursor-pointer [&>div]:flex [&>div]:items-center [&>div]:justify-between [&>div]:gap-2">
