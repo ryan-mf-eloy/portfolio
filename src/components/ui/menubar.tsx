@@ -11,41 +11,49 @@ const MenubarPortal = MenubarPrimitive.Portal;
 const MenubarSub = MenubarPrimitive.Sub;
 const MenubarRadioGroup = MenubarPrimitive.RadioGroup;
 
-const Menubar = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <MenubarPrimitive.Root
-    ref={ref}
-    className={cn(
-      "flex h-10 items-center space-x-1 rounded-md border bg-background p-1",
-      className,
-    )}
-    {...props}
-  />
-));
+interface MenubarProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Root> {
+  className?: string;
+}
+const Menubar = React.forwardRef<HTMLDivElement, MenubarProps>(
+  ({ className = "", ...props }, ref) => (
+    <MenubarPrimitive.Root
+      ref={ref}
+      className={cn(
+        "flex h-10 items-center space-x-1 rounded-md border bg-background p-1",
+        className,
+      )}
+      {...props}
+    />
+  ),
+);
 Menubar.displayName = MenubarPrimitive.Root.displayName;
 
-const MenubarTrigger = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger>
->(({ className, ...props }, ref) => (
-  <MenubarPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
-      className,
-    )}
-    {...props}
-  />
-));
+interface MenubarTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Trigger> {
+  className?: string;
+}
+const MenubarTrigger = React.forwardRef<HTMLButtonElement, MenubarTriggerProps>(
+  ({ className = "", ...props }, ref) => (
+    <MenubarPrimitive.Trigger
+      ref={ref}
+      className={cn(
+        "flex cursor-default select-none items-center rounded-sm px-3 py-1.5 text-sm font-medium outline-none focus:bg-accent focus:text-accent-foreground data-[state=open]:bg-accent data-[state=open]:text-accent-foreground",
+        className,
+      )}
+      {...props}
+    />
+  ),
+);
 MenubarTrigger.displayName = MenubarPrimitive.Trigger.displayName;
 
+interface MenubarSubTriggerProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> {
+  inset?: boolean;
+}
 const MenubarSubTrigger = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.SubTrigger>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubTrigger> & {
-    inset?: boolean;
-  }
+  HTMLDivElement,
+  MenubarSubTriggerProps
 >(({ className, inset, children, ...props }, ref) => (
   <MenubarPrimitive.SubTrigger
     ref={ref}
@@ -62,9 +70,11 @@ const MenubarSubTrigger = React.forwardRef<
 ));
 MenubarSubTrigger.displayName = MenubarPrimitive.SubTrigger.displayName;
 
+interface MenubarSubContentProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent> {}
 const MenubarSubContent = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.SubContent>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.SubContent>
+  HTMLDivElement,
+  MenubarSubContentProps
 >(({ className, ...props }, ref) => (
   <MenubarPrimitive.SubContent
     ref={ref}
@@ -77,10 +87,13 @@ const MenubarSubContent = React.forwardRef<
 ));
 MenubarSubContent.displayName = MenubarPrimitive.SubContent.displayName;
 
-const MenubarContent = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content>
->(
+interface MenubarContentProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Content> {
+  align?: "start" | "center" | "end";
+  alignOffset?: number;
+  sideOffset?: number;
+}
+const MenubarContent = React.forwardRef<HTMLDivElement, MenubarContentProps>(
   (
     { className, align = "start", alignOffset = -4, sideOffset = 8, ...props },
     ref,
@@ -102,27 +115,33 @@ const MenubarContent = React.forwardRef<
 );
 MenubarContent.displayName = MenubarPrimitive.Content.displayName;
 
-const MenubarItem = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
-  <MenubarPrimitive.Item
-    ref={ref}
-    className={cn(
-      "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      inset && "pl-8",
-      className,
-    )}
-    {...props}
-  />
-));
+interface MenubarItemProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Item> {
+  inset?: boolean;
+}
+const MenubarItem = React.forwardRef<HTMLDivElement, MenubarItemProps>(
+  ({ className, inset, ...props }, ref) => (
+    <MenubarPrimitive.Item
+      ref={ref}
+      className={cn(
+        "relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+        inset && "pl-8",
+        className,
+      )}
+      {...props}
+    />
+  ),
+);
+
 MenubarItem.displayName = MenubarPrimitive.Item.displayName;
 
+interface MenubarCheckboxItemProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem> {
+  checked?: boolean;
+}
 const MenubarCheckboxItem = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.CheckboxItem>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.CheckboxItem>
+  HTMLDivElement,
+  MenubarCheckboxItemProps
 >(({ className, children, checked, ...props }, ref) => (
   <MenubarPrimitive.CheckboxItem
     ref={ref}
@@ -143,9 +162,11 @@ const MenubarCheckboxItem = React.forwardRef<
 ));
 MenubarCheckboxItem.displayName = MenubarPrimitive.CheckboxItem.displayName;
 
+interface MenubarRadioItemProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem> {}
 const MenubarRadioItem = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.RadioItem>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.RadioItem>
+  HTMLDivElement,
+  MenubarRadioItemProps
 >(({ className, children, ...props }, ref) => (
   <MenubarPrimitive.RadioItem
     ref={ref}
@@ -165,27 +186,30 @@ const MenubarRadioItem = React.forwardRef<
 ));
 MenubarRadioItem.displayName = MenubarPrimitive.RadioItem.displayName;
 
-const MenubarLabel = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
-  <MenubarPrimitive.Label
-    ref={ref}
-    className={cn(
-      "px-2 py-1.5 text-sm font-semibold",
-      inset && "pl-8",
-      className,
-    )}
-    {...props}
-  />
-));
+interface MenubarLabelProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Label> {
+  inset?: boolean;
+}
+const MenubarLabel = React.forwardRef<HTMLDivElement, MenubarLabelProps>(
+  ({ className, inset, ...props }, ref) => (
+    <MenubarPrimitive.Label
+      ref={ref}
+      className={cn(
+        "px-2 py-1.5 text-sm font-semibold",
+        inset && "pl-8",
+        className,
+      )}
+      {...props}
+    />
+  ),
+);
 MenubarLabel.displayName = MenubarPrimitive.Label.displayName;
 
+interface MenubarSeparatorProps
+  extends React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator> {}
 const MenubarSeparator = React.forwardRef<
-  React.ElementRef<typeof MenubarPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof MenubarPrimitive.Separator>
+  HTMLDivElement,
+  MenubarSeparatorProps
 >(({ className, ...props }, ref) => (
   <MenubarPrimitive.Separator
     ref={ref}
@@ -195,10 +219,11 @@ const MenubarSeparator = React.forwardRef<
 ));
 MenubarSeparator.displayName = MenubarPrimitive.Separator.displayName;
 
-const MenubarShortcut = ({
+interface MenubarShortcutProps extends React.HTMLAttributes<HTMLSpanElement> {}
+const MenubarShortcut: React.FC<MenubarShortcutProps> = ({
   className,
   ...props
-}: React.HTMLAttributes<HTMLSpanElement>) => {
+}) => {
   return (
     <span
       className={cn(
@@ -209,7 +234,7 @@ const MenubarShortcut = ({
     />
   );
 };
-MenubarShortcut.displayname = "MenubarShortcut";
+MenubarShortcut.displayName = "MenubarShortcut";
 
 export {
   Menubar,
