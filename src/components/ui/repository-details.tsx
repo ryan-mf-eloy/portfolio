@@ -48,7 +48,7 @@ export default function RepositoryDetails({
 
   return (
     <Drawer onClose={onClose}>
-      <DrawerTrigger>
+      <DrawerTrigger asChild>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
@@ -76,10 +76,10 @@ export default function RepositoryDetails({
               {name}
             </DrawerTitle>
 
-            <span className="flex gap-3 w-full max-w-80 overflow-x-auto no-visible-scrollbar my-3 max-lg:justify-center">
+            <span className="flex items-center gap-3 w-full max-w-80 overflow-x-auto no-visible-scrollbar my-3 max-lg:justify-center">
               {techs.map((tech, index) => {
                 if (technologiesData[tech]) {
-                  const { Icon, color } = technologiesData[tech];
+                  const { Icon, color, size } = technologiesData[tech];
                   return (
                     <div key={index}>
                       <TooltipProvider>
@@ -87,7 +87,7 @@ export default function RepositoryDetails({
                           <TooltipTrigger className="cursor-default">
                             <Icon
                               className={`${color} transition-[2000ms]`}
-                              size={25}
+                              size={size ?? 25}
                             />
                           </TooltipTrigger>
                           <TooltipContent>

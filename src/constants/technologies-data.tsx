@@ -28,17 +28,60 @@ import {
   IconBrandTerraform,
   IconBrandAzure,
   IconBrandRust,
+  IconBrandPlanetscale,
 } from "@tabler/icons-react";
+
+import {
+  SiStyledcomponents,
+  SiEslint,
+  SiZod,
+  SiPrettier,
+  SiNestjs,
+  SiReacthookform,
+} from "react-icons/si";
 
 export type TechnologyData = Record<
   string,
   {
     Icon: React.ComponentType<{ className: string; size: number }>;
     color: string;
+    size?: number;
   }
 >;
 
 export const technologiesData: TechnologyData = {
+  "planet-scale": {
+    Icon: IconBrandPlanetscale,
+    color: "text-primary",
+  },
+  eslint: {
+    Icon: SiEslint,
+    color: "text-violet-600",
+    size: 22,
+  },
+  zod: {
+    Icon: SiZod,
+    color: "text-blue-700",
+  },
+  prettier: {
+    Icon: SiPrettier,
+    color: "text-gray-500",
+    size: 20,
+  },
+  "styled-components": {
+    Icon: SiStyledcomponents,
+    color: "text-rose-300",
+    size: 28,
+  },
+  "react-hook-form": {
+    Icon: SiReacthookform,
+    color: "text-rose-400",
+    size: 22,
+  },
+  "nest-js": {
+    Icon: SiNestjs,
+    color: "text-red-600",
+  },
   rust: {
     Icon: IconBrandRust,
     color: "text-red-500",

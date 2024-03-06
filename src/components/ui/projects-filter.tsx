@@ -17,15 +17,17 @@ import Badge from "@/components/ui/badge";
 
 type ItemStatus = "studying" | "to study";
 
-export default function ProjectsFilter({
-  handleSelection,
-  selectedTechs,
-}: {
+interface ProjectsFilterProps {
   handleSelection: (
     event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
   ) => void;
   selectedTechs: string[];
-}) {
+}
+
+export default function ProjectsFilter({
+  handleSelection,
+  selectedTechs,
+}: ProjectsFilterProps) {
   const { language } = useLanguage();
 
   const handleItemStatus = useCallback(
@@ -48,16 +50,13 @@ export default function ProjectsFilter({
     [language],
   );
 
-  const getCustomSelectedOptionStyle = useCallback(
-    (tech: string) => {
-      const isSelected = selectedTechs.includes(tech);
+  const getCustomSelectedOptionStyle = (tech: string) => {
+    const isSelected = selectedTechs.includes(tech);
 
-      if (isSelected) {
-        return "after:content-[''] after:h-3 after:w-3 after:rounded-sm after:bg-yellow-500 justify-between";
-      }
-    },
-    [selectedTechs],
-  );
+    if (isSelected) {
+      return "after:content-[''] after:h-3 after:w-3 after:rounded-sm after:bg-yellow-500 justify-between";
+    }
+  };
 
   return (
     <Menubar className="max-sm:flex-1 max-sm:w-full justify-between">
@@ -161,6 +160,13 @@ export default function ProjectsFilter({
               onClick={handleSelection}
             >
               Tailwind CSS
+            </MenubarItem>
+            <MenubarItem
+              className={getCustomSelectedOptionStyle("styled-components")}
+              data-value="styled-components"
+              onClick={handleSelection}
+            >
+              Styled Components
             </MenubarItem>
             <MenubarItem
               className={getCustomSelectedOptionStyle("react-hook-form")}

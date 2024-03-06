@@ -63,7 +63,7 @@ export default function RepositoryItem({
           <span className="flex gap-3 w-full max-w-80 max-sm:max-w-56 overflow-x-auto no-visible-scrollbar">
             {techs.map((tech, index) => {
               if (technologiesData[tech]) {
-                const { Icon, color } = technologiesData[tech];
+                const { Icon, color, size } = technologiesData[tech];
                 return (
                   <div key={index}>
                     <TooltipProvider>
@@ -71,7 +71,7 @@ export default function RepositoryItem({
                         <TooltipTrigger className="cursor-default">
                           <Icon
                             className={`${color} transition-[2000ms]`}
-                            size={25}
+                            size={size ?? 25}
                           />
                         </TooltipTrigger>
                         <TooltipContent>
