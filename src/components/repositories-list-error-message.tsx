@@ -1,8 +1,8 @@
 import { type mutate as mutateSWR } from "swr";
 
-import Button from "./button";
+import Button from "./ui/button";
 
-export default function FetchRepositoriesErrorMessage({
+export default function RepositoriesListErrorMessage({
   mutate,
   getRepositoriesAPIUrl,
 }: {

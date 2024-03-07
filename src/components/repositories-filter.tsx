@@ -1,5 +1,6 @@
-import { useLanguage } from "@/context/language-provider";
-import { type MouseEvent, useCallback } from "react";
+import { useCallback } from "react";
+import { useLanguage } from "@/hooks/use-language";
+import { useFilterRepositories } from "@/hooks/use-filter-repositories";
 
 import {
   Menubar,
@@ -17,34 +18,25 @@ import Badge from "@/components/ui/badge";
 
 type ItemStatus = "studying" | "to study";
 
-interface ProjectsFilterProps {
-  handleSelection: (
-    event: MouseEvent<HTMLDivElement, globalThis.MouseEvent>,
-  ) => void;
-  selectedTechs: string[];
-}
-
-export default function ProjectsFilter({
-  handleSelection,
-  selectedTechs,
-}: ProjectsFilterProps) {
+export default function ProjectsFilter() {
   const { language } = useLanguage();
+  const { handleSelection, selectedTechs } = useFilterRepositories();
 
   const handleItemStatus = useCallback(
     (status: ItemStatus) => {
-      switch (status) {
-        case "studying":
-          return (
-            <Badge variant="progress-outline">
-              {language === "en" ? "Studying" : "Estudando"}
-            </Badge>
-          );
-        case "to study":
-          return (
-            <Badge variant="waiting-outline">
-              {language === "en" ? "To Study" : "Para estudar"}
-            </Badge>
-          );
+      if (status === "studying") {
+        return (
+          <Badge variant="progress-outline">
+            {language === "en" ? "Studying" : "Estudando"}
+          </Badge>
+        );
+      }
+      if (status === "to study") {
+        return (
+          <Badge variant="waiting-outline">
+            {language === "en" ? "To Study" : "Para estudar"}
+          </Badge>
+        );
       }
     },
     [language],

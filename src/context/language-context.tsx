@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { type TLanguage } from "../components/ui/language-toggle";
 
 interface LanguageContextType {
@@ -8,7 +8,7 @@ interface LanguageContextType {
   setLanguage: React.Dispatch<React.SetStateAction<TLanguage>>;
 }
 
-const LanguageContext = createContext<LanguageContextType>({
+export const LanguageContext = createContext<LanguageContextType>({
   language: "en",
   setLanguage: () => {},
 });
@@ -33,8 +33,4 @@ export default function LanguageProvider({
       {children}
     </LanguageContext.Provider>
   );
-}
-
-export function useLanguage() {
-  return useContext(LanguageContext);
 }

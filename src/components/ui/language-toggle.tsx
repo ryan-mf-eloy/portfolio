@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "@/context/language-provider";
+import { useLanguage } from "@/hooks/use-language";
 
 import {
   DropdownMenu,

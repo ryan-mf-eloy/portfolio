@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useLanguage } from "@/context/language-provider";
-import { useTheme } from "@/context/theme-provider";
+import { useLanguage } from "@/hooks/use-language";
+import { useTheme } from "@/hooks/use-theme";
 
 import { IconArrowBack } from "@tabler/icons-react";
 

@@ -5,8 +5,8 @@ import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { Roboto as FontSans, Roboto_Mono as FontMono } from "next/font/google";
 
-import { ThemeProvider, NextThemeProvider } from "@/context/theme-provider";
-import LanguageProvider from "@/context/language-provider";
+import ThemeProvider, { NextThemeProvider } from "@/context/theme-context";
+import LanguageProvider from "@/context/language-context";
 
 const fontSans = FontSans({
   subsets: ["latin"],

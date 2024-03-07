@@ -1,5 +1,8 @@
 import Image from "next/image";
-import { useLanguage } from "@/context/language-provider";
+import { useLanguage } from "@/hooks/use-language";
+import { type Repository } from "@/context/repositories-context";
+
+import { technologiesData } from "@/constants/technologies-data";
 
 import {
   TooltipProvider,
@@ -16,14 +19,10 @@ import {
   DrawerFooter,
   DrawerClose,
   Drawer,
-} from "./drawer";
-import Button from "./button";
+} from "./ui/drawer";
+import Button from "./ui/button";
 
 import { IconMaximize } from "@tabler/icons-react";
-
-import { technologiesData } from "@/constants/technologies-data";
-
-import { type Repository } from "@/app/page";
 
 export default function RepositoryDetails({
   repository,
@@ -123,12 +122,13 @@ export default function RepositoryDetails({
             </div>
           </div>
 
-          <div>
+          <div className="max-w-[600px] max-h-80 rounded-md bg-zinc-600 w-full max-lg:max-w-96 max-sm:px-2">
             <Image
-              className="max-w-[600px] bg-zinc-600 p-1 rounded-md w-full max-lg:max-w-96 max-sm:px-2"
+              className="max-w-[600px] max-h-80 p-1 w-full max-lg:max-w-96 max-sm:px-2"
               src={projectImage}
-              priority
               alt={name}
+              priority
+              placeholder="empty"
               width={1500}
               height={1500}
             />

@@ -26,6 +26,7 @@
     "@typescript-eslint/no-misused-promises": "off",
     "array-callback-return": "off",
     "@typescript-eslint/return-await": "off",
-    "@typescript-eslint/no-floating-promises": "off"
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/consistent-type-assertions": "off"
   }
 }

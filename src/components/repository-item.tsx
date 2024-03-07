@@ -1,4 +1,5 @@
-import { useLanguage } from "@/context/language-provider";
+import { useLanguage } from "@/hooks/use-language";
+import { type Repository } from "@/context/repositories-context";
 
 import {
   TooltipProvider,
@@ -12,7 +13,6 @@ import { IconExternalLink } from "@tabler/icons-react";
 import { technologiesData } from "@/constants/technologies-data";
 import RepositoryDetails from "./repository-details";
 
-import { type Repository } from "@/app/page";
 import { type Dispatch, type SetStateAction } from "react";
 
 interface RepositoriesListProps {
