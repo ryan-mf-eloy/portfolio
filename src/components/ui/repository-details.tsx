@@ -48,10 +48,10 @@ export default function RepositoryDetails({
 
   return (
     <Drawer onClose={onClose}>
-      <DrawerTrigger asChild>
+      <DrawerTrigger>
         <TooltipProvider>
           <Tooltip>
-            <TooltipTrigger>
+            <TooltipTrigger asChild>
               <span className="p-2 w-10 h-10 text-zinc-400 hover:text-black dark:hover:text-white transition-[2000ms] flex items-center justify-center rounded-sm hover:bg-zinc-200 dark:hover:bg-zinc-900">
                 <IconMaximize width={25} />
               </span>
