@@ -38,8 +38,8 @@ export default function Home() {
 
             <p className="text-zinc-400 font-light min-h-20 max-w-96 text-lg sm:text-md">
               {language === "en"
-                ? "Passionate about technology with 5-6 years of experience creating scalable and efficient web applications. Driven by challenges!"
-                : "Apaixonado por tecnologia com 5-6 anos de experiência na criação de aplicativos web escalonáveis ​​e eficientes. Movido por desafios!"}
+                ? "Passionate about technology with 6 years of experience creating scalable and efficient web applications. Driven by challenges!"
+                : "Apaixonado por tecnologia com 6 anos de experiência na criação de aplicativos web escalonáveis ​​e eficientes. Movido por desafios!"}
             </p>
 
             <small className="mt-1 text-zinc-600">

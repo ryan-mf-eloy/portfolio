@@ -55,7 +55,7 @@ export default function Social() {
           <TooltipTrigger>
             <a
               className="border p-2 w-10 h-10 flex items-center justify-center rounded-sm hover:bg-zinc-100 dark:hover:bg-zinc-900"
-              href="mailto:math.eloy@hotmail.com"
+              href="mailto:ryan.eloy.bss@gmail.com"
               target="_blank"
               rel="noreferrer"
             >
