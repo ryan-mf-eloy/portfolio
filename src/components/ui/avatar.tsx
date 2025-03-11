@@ -11,7 +11,7 @@ export default function Avatar() {
           alt="Ryan Eloy"
           width={150}
           height={150}
-          className="rounded-md grayscale object-cover object-bottom h-16 w-16 max-sm:h-14 max-sm:w-14"
+          className="rounded-md object-cover object-bottom h-16 w-16 max-sm:h-14 max-sm:w-14"
         />
       </span>
       <span className="mb-2.5">

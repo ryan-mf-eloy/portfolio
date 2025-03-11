@@ -4,6 +4,7 @@ import "@/constants/metadata";
 import { cn } from "@/lib/utils";
 import { Analytics } from "@vercel/analytics/react";
 import { Roboto as FontSans, Roboto_Mono as FontMono } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import ThemeProvider, { NextThemeProvider } from "@/context/theme-context";
 import LanguageProvider from "@/context/language-context";
@@ -49,6 +50,8 @@ export default function RootLayout({
             </NextThemeProvider>
           </ThemeProvider>
         </LanguageProvider>
+
+        <SpeedInsights />
       </body>
     </html>
   );
