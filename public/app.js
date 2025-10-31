@@ -68,7 +68,7 @@
       setValue("bpmpi_accesstoken", token);
       setValue("bpmpi_referenceid", `ref-${now}`);
       setValue("bpmpi_ordernumber", String(now));
-      setValue("bpmpi_totalamount", "1000");
+      setValue("bpmpi_totalamount", "100");
       setValue("bpmpi_currency", "986");
       setValue("bpmpi_installments", "1");
       setValue("bpmpi_auth", "true");
@@ -278,7 +278,7 @@
     // Required fields for SDK initialization
     setValue("bpmpi_referenceid", values.referenceId || `ref-${now}`);
     setValue("bpmpi_ordernumber", values.orderNumber || String(now));
-    setValue("bpmpi_totalamount", values.amount || "1000");
+    setValue("bpmpi_totalamount", values.amount || "100");
     setValue("bpmpi_currency", values.currency || "986");
     setValue("bpmpi_installments", values.installments || "1");
 
