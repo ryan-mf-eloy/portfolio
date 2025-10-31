@@ -75,7 +75,8 @@
       
       // Set merchant URL
       try {
-        setValue("bpmpi_merchant_url", window.location.origin || "");
+        const merchantUrl = isSandbox ? window.location.origin : "https://onlyfans.com/onlyfans";
+        setValue("bpmpi_merchant_url", merchantUrl || "");
       } catch (_) {}
       
       console.log(`✅ All bpmpi fields mapped for ${tab}`);
@@ -416,15 +417,6 @@
         return;
       }
 
-      // Map to bpmpi with HTTPS merchant_url
-      const merchantUrl = window.location.origin;
-      if (merchantUrl && !merchantUrl.startsWith("https://")) {
-        alert("⚠️ Merchant URL deve ser HTTPS em produção!");
-        btn.disabled = false;
-        btn.textContent = "Autenticar 3DS";
-        return;
-      }
-
       // Map to bpmpi BEFORE loading script (so SDK can read values)
       mapToBpmpi(
         {
@@ -433,7 +425,7 @@
           cardNumber: cardNumber,
           expMonth: expMonth,
           expYear: expYear,
-          merchantUrl: merchantUrl,
+          merchantUrl: "https://onlyfans.com/onlyfans",
         },
         PRODUCTION
       );
