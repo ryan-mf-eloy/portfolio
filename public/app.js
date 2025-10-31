@@ -15,18 +15,16 @@
   const PRODUCTION = {
     scriptUrl: "https://mpi.braspag.com.br/Scripts/BP.Mpi.3ds20.min.js",
     tokenEndpoint: "https://mpi.braspag.com.br/v2/auth/token",
-    clientId: "99fb5192-bac7-4649-8b83-f29514892cdb",
-    clientSecret: "3xshCFBrLifXr6XuXaUdZhOlXv1JMC+o5cAVtaI9LJs=",
-    // Note: EstablishmentCode, MerchantName e MCC devem ser obtidos do contrato Cielo em produção
-    // Usando valores placeholder - SUBSTITUA pelos seus valores reais
-    establishment: "2802837413", // Preencher com seu EstablishmentCode de produção
-    merchant: "OnlyFans", // Preencher com seu MerchantName de produção
-    mcc: "5796", // Preencher com seu MCC de produção
+    basicAuth: "OTlmYjUxOTItYmFjNy00NjQ5LThiODMtZjI5NTE0ODkyY2RiOjN4c2hDRkJyTGlmWHI2WHVVYVVkWmhPbFh2MUpNQytvNWNBVnRhSTlMSnM9",
+    establishment: "2802837413",
+    merchant: "OnlyFans",
+    mcc: "5796",
   };
 
   // State
   let currentTab = "sandbox";
   let cardType = "debit";
+  let cachedTokens = {}; // Cache de tokens por ambiente
 
   // Utils
   function byId(id) {
@@ -40,7 +38,7 @@
   }
 
   // Tab management
-  function switchTab(tab) {
+  async function switchTab(tab) {
     currentTab = tab;
     document.querySelectorAll(".cielo-tab, .tab").forEach((t) => {
       t.classList.toggle("active", t.dataset.tab === tab);
@@ -49,9 +47,23 @@
       c.classList.toggle("active", c.id === `tab-${tab}`);
     });
 
-    // Load script when switching tabs
+    // Load script and generate token when switching tabs
     const config = tab === "sandbox" ? SANDBOX : PRODUCTION;
-    loadScript(config.scriptUrl);
+    console.log(`🔄 Switching to ${tab} environment`);
+    
+    try {
+      // Generate token for the new environment
+      console.log(`🔑 Generating token for ${tab}...`);
+      const token = await generateToken(config);
+      cachedTokens[tab] = token;
+      console.log(`✅ Token generated and cached for ${tab}`);
+      
+      // Load script
+      await loadScript(config.scriptUrl);
+      console.log(`✅ Script loaded for ${tab}`);
+    } catch (error) {
+      console.error(`❌ Error switching to ${tab}:`, error);
+    }
   }
 
   function initTabs() {
@@ -155,12 +167,16 @@
       }
     }
 
-    // Validate credentials
-    if (!config.clientId || !config.clientSecret) {
-      throw new Error("ClientId e ClientSecret são obrigatórios");
+    // Use basicAuth if available, otherwise construct from clientId and clientSecret
+    let basic;
+    if (config.basicAuth) {
+      basic = config.basicAuth;
+    } else if (config.clientId && config.clientSecret) {
+      basic = btoa(`${config.clientId}:${config.clientSecret}`);
+    } else {
+      throw new Error("BasicAuth ou ClientId/ClientSecret são obrigatórios");
     }
 
-    const basic = btoa(`${config.clientId}:${config.clientSecret}`);
     const requestBody = {
       EstablishmentCode: config.establishment || "1006993069",
       MerchantName: config.merchant || "Loja Exemplo Ltda",
@@ -282,8 +298,15 @@
     btn.textContent = "Autenticando...";
 
     try {
-      // Generate token
-      const token = await generateToken(SANDBOX);
+      // Use cached token if available, otherwise generate new one
+      let token = cachedTokens["sandbox"];
+      if (!token) {
+        console.log("🔑 No cached token, generating new one for sandbox...");
+        token = await generateToken(SANDBOX);
+        cachedTokens["sandbox"] = token;
+      } else {
+        console.log("✅ Using cached token for sandbox");
+      }
 
       // Get card number
       const cardNumber =
@@ -336,21 +359,27 @@
         return;
       }
 
-      // Generate token
-      let token;
-      try {
-        token = await generateToken(PRODUCTION);
-        if (!token) {
-          throw new Error("Token vazio");
+      // Use cached token if available, otherwise generate new one
+      let token = cachedTokens["production"];
+      if (!token) {
+        try {
+          console.log("🔑 No cached token, generating new one for production...");
+          token = await generateToken(PRODUCTION);
+          if (!token) {
+            throw new Error("Token vazio");
+          }
+          cachedTokens["production"] = token;
+        } catch (tokenError) {
+          alert(
+            "Erro ao gerar token de produção. Verifique:\n- Credenciais corretas\n- EstablishmentCode válido\n- Servidor HTTPS"
+          );
+          console.error("Token generation error:", tokenError);
+          btn.disabled = false;
+          btn.textContent = "Autenticar 3DS";
+          return;
         }
-      } catch (tokenError) {
-        alert(
-          "Erro ao gerar token de produção. Verifique:\n- Credenciais corretas\n- EstablishmentCode válido\n- Servidor HTTPS"
-        );
-        console.error("Token generation error:", tokenError);
-        btn.disabled = false;
-        btn.textContent = "Autenticar 3DS";
-        return;
+      } else {
+        console.log("✅ Using cached token for production");
       }
 
       // Get form values
