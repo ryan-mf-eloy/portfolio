@@ -18,7 +18,7 @@
     basicAuth: "OTlmYjUxOTItYmFjNy00NjQ5LThiODMtZjI5NTE0ODkyY2RiOjN4c2hDRkJyTGlmWHI2WHVVYVVkWmhPbFh2MUpNQytvNWNBVnRhSTlMSnM9",
     establishment: "2802837413",
     merchant: "OnlyFans",
-    mcc: "5796",
+    mcc: "5967",
   };
 
   // State
