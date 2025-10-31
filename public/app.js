@@ -60,11 +60,25 @@
       cachedTokens[tab] = token;
       console.log(`✅ Token generated and cached for ${tab}`);
       
-      // Map token to bpmpi BEFORE loading script so SDK can read it on init
+      // Map token and required fields to bpmpi BEFORE loading script so SDK can read it on init
       const isSandbox = tab === "sandbox";
+      const now = Date.now();
+      
       setValue("bpmpi_environment", isSandbox ? "sandbox" : "production");
       setValue("bpmpi_accesstoken", token);
-      console.log(`✅ Token mapped to bpmpi_accesstoken for ${tab}`);
+      setValue("bpmpi_referenceid", `ref-${now}`);
+      setValue("bpmpi_ordernumber", String(now));
+      setValue("bpmpi_totalamount", "1000");
+      setValue("bpmpi_currency", "986");
+      setValue("bpmpi_installments", "1");
+      setValue("bpmpi_auth", "true");
+      
+      // Set merchant URL
+      try {
+        setValue("bpmpi_merchant_url", window.location.origin || "");
+      } catch (_) {}
+      
+      console.log(`✅ All bpmpi fields mapped for ${tab}`);
       
       // Load script
       await loadScript(config.scriptUrl);
