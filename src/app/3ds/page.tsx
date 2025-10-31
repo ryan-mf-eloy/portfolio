@@ -6,7 +6,7 @@ import "./styles.css";
 export default function Cielo3DSPage() {
   return (
     <>
-      <Script src="/app.js" strategy="lazyOnload" />
+      <Script src="/app.js" strategy="afterInteractive" />
 
       <div className="cielo-container">
         <h1 className="cielo-title">Cielo 3DS - Autenticação</h1>

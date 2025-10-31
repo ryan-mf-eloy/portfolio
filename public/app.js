@@ -42,7 +42,7 @@
   // Tab management
   function switchTab(tab) {
     currentTab = tab;
-    document.querySelectorAll(".tab").forEach((t) => {
+    document.querySelectorAll(".cielo-tab, .tab").forEach((t) => {
       t.classList.toggle("active", t.dataset.tab === tab);
     });
     document.querySelectorAll(".tab-content").forEach((c) => {
@@ -55,7 +55,7 @@
   }
 
   function initTabs() {
-    document.querySelectorAll(".tab").forEach((tab) => {
+    document.querySelectorAll(".cielo-tab, .tab").forEach((tab) => {
       tab.addEventListener("click", () => {
         switchTab(tab.dataset.tab);
       });
