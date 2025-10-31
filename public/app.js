@@ -16,6 +16,8 @@
     scriptUrl: "https://mpi.braspag.com.br/Scripts/BP.Mpi.3ds20.min.js",
     tokenEndpoint: "https://mpi.braspag.com.br/v2/auth/token",
     basicAuth: "OTlmYjUxOTItYmFjNy00NjQ5LThiODMtZjI5NTE0ODkyY2RiOjN4c2hDRkJyTGlmWHI2WHVVYVVkWmhPbFh2MUpNQytvNWNBVnRhSTlMSnM9",
+    clientId: "99fb5192-bac7-4649-8b83-f29514892cdb",
+    clientSecret: "3xshCFBrLifXr6XuUaUdZhOlXv1JMC+o5cAVtaI9LJs=",
     establishment: "2802837413",
     merchant: "OnlyFans",
     mcc: "5967",
@@ -57,6 +59,12 @@
       const token = await generateToken(config);
       cachedTokens[tab] = token;
       console.log(`✅ Token generated and cached for ${tab}`);
+      
+      // Map token to bpmpi BEFORE loading script so SDK can read it on init
+      const isSandbox = tab === "sandbox";
+      setValue("bpmpi_environment", isSandbox ? "sandbox" : "production");
+      setValue("bpmpi_accesstoken", token);
+      console.log(`✅ Token mapped to bpmpi_accesstoken for ${tab}`);
       
       // Load script
       await loadScript(config.scriptUrl);
