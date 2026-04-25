@@ -1,5 +1,5 @@
-# My Portfolio
+# ryaneloy
 
-<p>My portfolio integrated with the public GitHub API.</p>
+Personal portfolio of Ryan Eloy — Full Stack JavaScript developer.
 
-<img src="./preview.png" />
+Built with Next.js 16, React 19, Tailwind CSS v4.

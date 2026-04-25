@@ -1,56 +1,27 @@
-"use client";
-
 import Link from "next/link";
-import { useLanguage } from "@/hooks/use-language";
-import { useTheme } from "@/hooks/use-theme";
-
-import { IconArrowBack } from "@tabler/icons-react";
-
-import MovingBorderButton from "@/components/ui/moving-border-button";
-import SparklesCore from "@/components/ui/sparkles";
 
 export default function NotFound() {
-  const { language } = useLanguage();
-  const { theme } = useTheme();
-
   return (
-    <div>
-      <div className="h-[40rem] w-full dark:bg-black flex flex-col items-center justify-center overflow-hidden rounded-md">
-        <h5 className="text-zinc-500 text-lg font-thin mb-20">
-          {language === "en"
-            ? "There is nobody here..."
-            : "Não tem ninguém aqui..."}
-        </h5>
-
-        <h1 className="mb-5 max-md:text-7xl text-9xl font-bold text-center font-mono text-primary relative z-20">
+    <main className="grid min-h-screen place-items-center bg-oz-bg px-6">
+      <div className="text-center">
+        <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-oz-text-dim">
           404
-        </h1>
-
-        <Link href={"/"} className="z-40">
-          <MovingBorderButton className="gap-2">
-            <IconArrowBack size={18} />
-            {language === "en" ? "Back to home" : "Volver ao início"}
-          </MovingBorderButton>
-        </Link>
-
-        <div className="max-w-[40rem] w-full h-40 mt-5 relative flex flex-col items-center justify-center">
-          <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-rose-500 to-transparent h-[2px] w-3/4 blur-sm" />
-          <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-rose-500 to-transparent h-px w-3/4" />
-          <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-yellow-500 to-transparent h-[5px] w-1/4 blur-sm" />
-          <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-yellow-500 to-transparent h-px w-1/4" />
-
-          <SparklesCore
-            background="transparent"
-            minSize={0.4}
-            maxSize={1}
-            particleDensity={800}
-            className="w-full h-full"
-            particleColor={theme === "dark" ? "#fff" : "#000"}
-          />
-
-          <div className="absolute inset-0 w-full h-full dark:bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]" />
         </div>
+        <h1 className="mt-4 text-[44px] font-extrabold leading-[0.95] tracking-[-0.045em] text-oz-text md:text-[64px]">
+          Page not found
+          <span className="text-oz-green">.</span>
+        </h1>
+        <p className="mx-auto mt-3 max-w-[36ch] text-[14.5px] text-oz-text-mute">
+          The page you&apos;re looking for doesn&apos;t exist.
+        </p>
+        <Link
+          href="/"
+          className="mt-10 inline-flex items-center gap-1.5 font-mono text-[13px] text-oz-text-mute no-underline transition-colors hover:text-oz-green"
+        >
+          <span aria-hidden>←</span>
+          back home
+        </Link>
       </div>
-    </div>
+    </main>
   );
 }

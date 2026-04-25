@@ -1,0 +1,141 @@
+{
+  "basics": {
+    "name": "Ryan Eloy",
+    "label": "Senior Full Stack Software Engineer",
+    "email": "ryan.eloy.bss@gmail.com",
+    "phone": "+55 11 97304-1534",
+    "url": "https://ryaneloy.dev",
+    "summary": "Full Stack Software Engineer with 7 years of experience shipping production systems end-to-end. Specialized recently in payment gateway integrations, card processing, POS systems, and cross-border orchestration across Brazil, Mexico, and the US. Built MASP's serverless ticketing platform from scratch and delivered Bradesco Seguros' AI chatbot at scale. Comfortable across TypeScript/Node.js, React, and AWS infrastructure.",
+    "location": {
+      "city": "São Paulo",
+      "region": "São Paulo",
+      "countryCode": "BR"
+    },
+    "profiles": [
+      { "network": "LinkedIn", "url": "https://linkedin.com/in/ryan-eloy-5906b91a5" },
+      { "network": "GitHub", "url": "https://github.com/ryan-mf-eloy" }
+    ]
+  },
+  "work": [
+    {
+      "name": "Luby",
+      "position": "Senior Full Stack Software Engineer",
+      "location": "São Paulo, Brazil",
+      "startDate": "2025-07",
+      "highlights": [
+        "Integrated local acquirers and payment processors into a unified cross-border orchestration layer across Brazil, Mexico, and the US — handling gateway configuration, acquirer-specific parameters, and PCI compliance requirements.",
+        "Analyzed credit card transaction failure patterns to identify decline reasons; implemented retry strategies and routing optimizations to improve approval rates.",
+        "Provided data-driven research on payment routing, fraud thresholds, and market expansion to support product and business decisions.",
+        "Collaborated with international stakeholders across time zones, delivering features in agile sprints with clear technical specs and documentation."
+      ]
+    },
+    {
+      "name": "Compass UOL",
+      "position": "Frontend Developer",
+      "location": "São Paulo, Brazil",
+      "startDate": "2024-07",
+      "endDate": "2025-07",
+      "highlights": [
+        "Delivered full-stack solutions for enterprise clients in the automotive sector, leading frontend implementation in Vue.js.",
+        "Contributed to code reviews and automated testing practices, improving release quality and team velocity.",
+        "Integrated Adobe Experience Manager (AEM) for content delivery, reducing publishing turnaround for marketing materials."
+      ]
+    },
+    {
+      "name": "MASP — São Paulo Museum of Art",
+      "position": "Full Stack Developer",
+      "location": "São Paulo, Brazil",
+      "startDate": "2024-03",
+      "endDate": "2024-08",
+      "highlights": [
+        "Built MASP's proprietary ticketing system from scratch — a serverless API on AWS Lambda processing thousands of monthly ticket sales and membership validations, replacing a costly third-party platform.",
+        "Developed a React Native mobile app used by staff for real-time check-in and ticket/membership card validation at museum entrances.",
+        "Integrated multiple payment gateways and POS terminals for seamless visitor checkout.",
+        "Set up auto-scaling AWS infrastructure to handle high-traffic event days with thousands of concurrent visitors; configured GCP services for reCAPTCHA and SMS Defense."
+      ]
+    },
+    {
+      "name": "MJV Technology & Innovation",
+      "position": "Software Development Analyst",
+      "location": "São Paulo, Brazil",
+      "startDate": "2021-07",
+      "endDate": "2024-03",
+      "highlights": [
+        "Worked on BIA, an AI-powered chatbot for Bradesco Seguros — one of Brazil's largest insurance operations, serving millions of policyholders.",
+        "Developed and maintained conversational flows integrated with IBM Watson AI, automating high-volume customer and broker support requests.",
+        "Reduced call center operational costs and average response times by handling frequent queries automatically across multiple channels.",
+        "Engineered API integrations for omnichannel support — WhatsApp, web, and phone.",
+        "Operated within a hybrid on-premise + cloud architecture meeting strict security, compliance, and data sovereignty requirements."
+      ]
+    },
+    {
+      "name": "VBMC Consultores",
+      "position": "Full Stack Developer",
+      "location": "Jundiaí, Brazil",
+      "startDate": "2019-09",
+      "endDate": "2021-07",
+      "highlights": [
+        "Started as a trainee and was promoted to systems analyst within the first year.",
+        "Built an internal ERP from scratch for managing consultant activities, partner relationships, and day-to-day operations.",
+        "Developed a meeting recording portal, a job listings platform, and automated report generation tools that streamlined administrative workflows.",
+        "Delivered custom software for client companies and managed all IT infrastructure — servers, networks, and deployments."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Cruzeiro do Sul Virtual",
+      "area": "Information Technology",
+      "studyType": "Systems Development Analyst",
+      "startDate": "2023-08",
+      "endDate": "2025-08"
+    },
+    {
+      "institution": "United Idiomas",
+      "area": "English as a Second Language",
+      "startDate": "2023-08",
+      "endDate": "2025-04"
+    },
+    {
+      "institution": "ETEC Antônio Vasco Venchiarutti",
+      "area": "IT / Software Technology",
+      "studyType": "Integrated Technical Course",
+      "startDate": "2017",
+      "endDate": "2019"
+    }
+  ],
+  "skills": [
+    {
+      "name": "Languages",
+      "keywords": ["TypeScript", "JavaScript", "Node.js"]
+    },
+    {
+      "name": "Frontend",
+      "keywords": ["React", "Next.js", "Vue.js", "React Native"]
+    },
+    {
+      "name": "Backend",
+      "keywords": ["NestJS", "GraphQL", "REST APIs", "Serverless architectures"]
+    },
+    {
+      "name": "Cloud & Infrastructure",
+      "keywords": ["AWS (Lambda, ECS, S3)", "GCP", "Docker"]
+    },
+    {
+      "name": "Domains & Practices",
+      "keywords": [
+        "Cross-border payments",
+        "Payment gateway integration",
+        "PCI compliance",
+        "AI / conversational systems",
+        "Agile delivery",
+        "Code review",
+        "Automated testing"
+      ]
+    }
+  ],
+  "languages": [
+    { "language": "English", "fluency": "Full Professional" },
+    { "language": "Portuguese", "fluency": "Native" }
+  ]
+}
