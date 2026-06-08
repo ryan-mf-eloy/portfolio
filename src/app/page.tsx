@@ -1,16 +1,18 @@
 import { FeaturedKoda } from "@/components/featured-koda";
-import { PortfolioHeader } from "@/components/portfolio-header";
+import { FloatingActions } from "@/components/floating-actions";
+import { InfinityBackground } from "@/components/infinity-background";
 import { RecentProjects } from "@/components/recent-projects";
 import { TuiCard } from "@/components/tui-card";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-oz-bg lg:h-[100dvh] lg:min-h-[680px] lg:overflow-hidden">
-      <div className="mx-auto flex h-full max-w-[1600px] flex-col p-3 sm:p-5 lg:p-6">
-        <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[minmax(360px,40%)_1fr]">
+    <main className="constellation-bg min-h-screen text-oz-text">
+      <InfinityBackground />
+      <FloatingActions />
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col px-5 pb-12 pt-[112px] sm:px-8 sm:pb-14 sm:pt-[124px] lg:min-h-screen lg:px-8 lg:pb-16 lg:pt-[112px] xl:px-10">
+        <div className="grid min-h-0 flex-1 gap-10 lg:grid-cols-[minmax(420px,38%)_minmax(0,1fr)] lg:gap-16 xl:gap-20">
           <TuiCard />
-          <section className="flex min-h-0 min-w-0 flex-col gap-4">
-            <PortfolioHeader />
+          <section className="flex min-h-0 min-w-0 flex-col gap-8">
             <FeaturedKoda />
             <RecentProjects />
           </section>

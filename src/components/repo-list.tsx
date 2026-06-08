@@ -7,33 +7,32 @@ import { RepoSkeleton } from "@/components/repo-skeleton";
 import { RepoTooltip } from "@/components/repo-tooltip";
 
 const TOOLTIP_WIDTH = 320;
-const TOOLTIP_GAP = 12;
-const TOOLTIP_EST_HEIGHT = 280;
-const VIEWPORT_PADDING = 16;
+const TOOLTIP_EST_HEIGHT = 270;
+const TOOLTIP_PADDING = 12;
+const TOOLTIP_EXIT_MS = 180;
 
-type HoverState = { repo: Repo; style: CSSProperties } | null;
+type HoverPhase = "enter" | "exit";
+type HoverState = { repo: Repo; style: CSSProperties; phase: HoverPhase } | null;
 
-function computeTooltipStyle(rect: DOMRect): CSSProperties {
-  const vw = window.innerWidth;
-  const vh = window.innerHeight;
+function computeTooltipStyle(rowRect: DOMRect, panelRect: DOMRect): CSSProperties {
+  const maxLeft = Math.max(
+    TOOLTIP_PADDING,
+    panelRect.width - TOOLTIP_WIDTH - TOOLTIP_PADDING,
+  );
+  const topNearRow = rowRect.top - panelRect.top - 8;
+  const maxTop = Math.max(
+    TOOLTIP_PADDING,
+    panelRect.height - TOOLTIP_EST_HEIGHT - TOOLTIP_PADDING,
+  );
 
-  let left = rect.left - TOOLTIP_WIDTH - TOOLTIP_GAP;
-  if (left < VIEWPORT_PADDING) {
-    // Fallback: place to the right of the row.
-    left = Math.min(rect.right + TOOLTIP_GAP, vw - TOOLTIP_WIDTH - VIEWPORT_PADDING);
-  }
-
-  let top = rect.top + rect.height / 2 - TOOLTIP_EST_HEIGHT / 2;
-  if (top < VIEWPORT_PADDING) top = VIEWPORT_PADDING;
-  const maxTop = vh - TOOLTIP_EST_HEIGHT - VIEWPORT_PADDING;
-  if (top > maxTop) top = Math.max(VIEWPORT_PADDING, maxTop);
+  const top = Math.min(Math.max(topNearRow, TOOLTIP_PADDING), maxTop);
 
   return {
-    position: "fixed",
-    left: `${left}px`,
+    position: "absolute",
+    left: `${maxLeft}px`,
     top: `${top}px`,
     width: `${TOOLTIP_WIDTH}px`,
-    zIndex: 50,
+    zIndex: 20,
   };
 }
 
@@ -44,15 +43,18 @@ export function RepoList() {
   const [hover, setHover] = useState<HoverState>(null);
 
   const listRef = useRef<HTMLUListElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef(0);
   const loadingRef = useRef(false);
   const doneRef = useRef(false);
   const mountedRef = useRef(true);
+  const exitTimerRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     mountedRef.current = true;
     return () => {
       mountedRef.current = false;
+      window.clearTimeout(exitTimerRef.current);
     };
   }, []);
 
@@ -111,18 +113,37 @@ export function RepoList() {
     ) {
       return;
     }
-    setHover({ repo, style: computeTooltipStyle(el.getBoundingClientRect()) });
+    const panel = panelRef.current;
+    if (!panel) return;
+    window.clearTimeout(exitTimerRef.current);
+    setHover({
+      repo,
+      style: computeTooltipStyle(
+        el.getBoundingClientRect(),
+        panel.getBoundingClientRect(),
+      ),
+      phase: "enter",
+    });
   };
-  const handleLeave = () => setHover(null);
+  const handleLeave = () => {
+    setHover((current) => {
+      if (!current) return null;
+      return { ...current, phase: "exit" };
+    });
+    window.clearTimeout(exitTimerRef.current);
+    exitTimerRef.current = window.setTimeout(() => {
+      if (mountedRef.current) setHover(null);
+    }, TOOLTIP_EXIT_MS);
+  };
 
   const showSkeleton = items.length === 0 && loading;
   const showFooter = items.length > 0 && (loading || done);
 
   return (
-    <>
+    <div ref={panelRef} className="relative min-h-0 flex-1">
       <ul
         ref={listRef}
-        className="repo-scroll m-0 max-h-[60vh] min-h-0 flex-1 list-none p-0 lg:max-h-none"
+        className="repo-scroll m-0 h-full min-h-0 list-none p-0"
       >
         {showSkeleton && <RepoSkeleton />}
         {!showSkeleton &&
@@ -139,19 +160,26 @@ export function RepoList() {
             {loading ? (
               <>
                 <span className="loading-bar" aria-hidden />
-                <span className="font-mono text-[10px] tracking-[0.08em] text-oz-text-dim">
+                <span className="tui-mono text-[10px] uppercase text-oz-text-dim">
                   LOADING MORE
                 </span>
               </>
             ) : (
-              <span className="font-mono text-[11px] tracking-[0.04em] text-oz-text-dim">
+              <span className="tui-mono text-[11px] text-oz-text-dim">
                 — end of history —
               </span>
             )}
           </li>
         )}
       </ul>
-      {hover && <RepoTooltip repo={hover.repo} style={hover.style} />}
-    </>
+      {hover && (
+        <RepoTooltip
+          key={hover.repo.id}
+          repo={hover.repo}
+          style={hover.style}
+          phase={hover.phase}
+        />
+      )}
+    </div>
   );
 }

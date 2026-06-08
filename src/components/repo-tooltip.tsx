@@ -18,9 +18,11 @@ function initialState(repoName: string): ImgState {
 export function RepoTooltip({
   repo,
   style,
+  phase,
 }: {
   repo: Repo;
   style: CSSProperties;
+  phase: "enter" | "exit";
 }) {
   const [imgState, setImgState] = useState<ImgState>(() => initialState(repo.name));
 
@@ -38,7 +40,12 @@ export function RepoTooltip({
   }
 
   return (
-    <div role="tooltip" className="repo-tooltip" style={style}>
+    <div
+      role="tooltip"
+      className="repo-tooltip"
+      data-state={phase}
+      style={style}
+    >
       {showImage && (
         <div className="repo-tooltip__image-wrap">
           {/* eslint-disable-next-line @next/next/no-img-element */}

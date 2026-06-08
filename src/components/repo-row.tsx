@@ -1,4 +1,6 @@
+import { ArrowUpRight, Star } from "lucide-react";
 import { formatRelativeDate, languageColor, type Repo } from "@/lib/github";
+import type { CSSProperties } from "react";
 
 type Props = {
   repo: Repo;
@@ -10,79 +12,63 @@ export function RepoRow({ repo, onHover, onLeave }: Props) {
   const lang = repo.language ?? "—";
   const color = languageColor(repo.language);
   const isExternal = repo.url.startsWith("http");
+  const style = { "--repo-color": color } as CSSProperties;
 
   return (
-    <li className="list-none">
+    <li className="list-none border-t border-oz-border first:border-t-0">
       <a
         href={repo.url}
         target={isExternal ? "_blank" : undefined}
         rel={isExternal ? "noopener noreferrer" : undefined}
-        className="repo-row px-4 py-3 sm:px-5"
+        className="repo-row px-5 py-4 sm:px-7"
+        style={style}
         onMouseEnter={(e) => onHover?.(e.currentTarget)}
         onMouseLeave={() => onLeave?.()}
         onFocus={(e) => onHover?.(e.currentTarget)}
         onBlur={() => onLeave?.()}
       >
-        <span className="repo-row__rail" style={{ background: color }} />
-
-        <div className="flex min-w-0 flex-col gap-0.5">
-          <div className="flex min-w-0 items-baseline gap-2.5">
-            <span className="truncate text-[14px] font-semibold tracking-[-0.015em] text-oz-text">
+        <span className="flex min-w-0 flex-col gap-1">
+          <span className="flex min-w-0 items-baseline gap-2.5">
+            <span className="display-type truncate text-[17px] font-bold leading-snug text-oz-text">
               {repo.name}
             </span>
             {repo.archived && (
-              <span className="font-mono text-[9px] uppercase tracking-[0.08em] text-oz-text-dim">
+              <span className="tui-mono text-[10px] uppercase text-oz-text-dim">
                 archived
               </span>
             )}
-          </div>
+          </span>
           {repo.description && (
-            <div className="truncate text-[12px] leading-snug text-oz-text-mute">
+            <span className="line-clamp-2 text-[14px] leading-snug text-oz-text-mute sm:truncate">
               {repo.description}
-            </div>
+            </span>
           )}
-        </div>
+        </span>
 
-        <div className="flex shrink-0 items-center gap-3 font-mono text-[11px] text-oz-text-dim sm:gap-4">
-          <span className="inline-flex items-center gap-1.5" aria-label={lang}>
+        <span className="flex min-w-0 shrink-0 items-center gap-4 tui-mono text-[12px] text-oz-text-mute">
+          <span className="inline-flex min-w-0 items-center gap-2" aria-label={lang}>
             <span
               className="inline-block size-1.5 shrink-0 rounded-full"
               style={{ background: color }}
             />
-            <span className="hidden sm:inline">{lang}</span>
+            <span className="hidden max-w-[96px] truncate sm:inline">{lang}</span>
           </span>
           {repo.stars > 0 && (
             <span className="inline-flex items-center gap-1">
-              <svg
-                width="11"
-                height="11"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden
-              >
-                <path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.75.75 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z" />
-              </svg>
+              <Star aria-hidden size={13} strokeWidth={2} />
               {repo.stars}
             </span>
           )}
-          <span className="hidden min-w-[44px] text-right sm:inline">
+          <span className="hidden min-w-[64px] text-right sm:inline">
             {formatRelativeDate(repo.updated_at)}
           </span>
-          <svg
-            className="repo-row__arrow"
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
+          <ArrowUpRight
             aria-hidden
-          >
-            <path d="M7 17L17 7M17 7H8M17 7V16" />
-          </svg>
-        </div>
+            size={16}
+            strokeWidth={2}
+            className="repo-row__arrow"
+          />
+        </span>
       </a>
     </li>
   );

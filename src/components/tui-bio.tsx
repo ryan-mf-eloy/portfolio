@@ -1,9 +1,6 @@
 export function TuiBio() {
   return (
-    <p
-      className="text-[14px] leading-[1.55] tracking-[-0.005em] break-words"
-      style={{ color: "rgba(245, 243, 238, 0.82)" }}
-    >
+    <p className="max-w-[600px] text-[18px] leading-[1.62] text-oz-text-soft sm:text-[20px] lg:text-[19px] xl:text-[20px]">
       Seven years shipping production systems from product spec through
       frontend, backend, and the infrastructure that holds them together. I&apos;ve
       built greenfield platforms that replaced costly third-party stacks,

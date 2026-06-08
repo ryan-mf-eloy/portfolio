@@ -14,30 +14,30 @@ export type Repo = {
 };
 
 export const PREVIEW_IMAGE_URL = (name: string) =>
-  `/api/preview/${encodeURIComponent(name)}`;
+  `https://opengraph.githubassets.com/ryan-eloy-portfolio/${GH_USER}/${encodeURIComponent(name)}`;
 
 export const LANG_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Rust: "#dea584",
-  Go: "#00add8",
-  Python: "#3572a5",
-  CSS: "#563d7c",
-  HTML: "#e34c26",
-  Shell: "#89e051",
-  Java: "#b07219",
-  Ruby: "#701516",
-  Swift: "#F05138",
-  Kotlin: "#A97BFF",
-  C: "#555555",
-  "C++": "#f34b7d",
-  Vue: "#41b883",
-  Svelte: "#ff3e00",
+  TypeScript: "#58A1E1",
+  JavaScript: "#E3EB84",
+  Rust: "#FE7B42",
+  Go: "#58A1E1",
+  Python: "#549F86",
+  CSS: "#677669",
+  HTML: "#FE7B42",
+  Shell: "#677669",
+  Java: "#FE7B42",
+  Ruby: "#FE7B42",
+  Swift: "#FE7B42",
+  Kotlin: "#58A1E1",
+  C: "#677669",
+  "C++": "#677669",
+  Vue: "#549F86",
+  Svelte: "#FE7B42",
 };
 
 export function languageColor(lang: string | null | undefined): string {
-  if (!lang) return "#888";
-  return LANG_COLORS[lang] ?? "#888";
+  if (!lang) return "#677669";
+  return LANG_COLORS[lang] ?? "#677669";
 }
 
 export const DEMO_REPOS: Repo[] = [

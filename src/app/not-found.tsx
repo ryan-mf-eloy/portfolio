@@ -1,13 +1,16 @@
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { InfinityBackground } from "@/components/infinity-background";
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-screen place-items-center bg-oz-bg px-6">
+    <main className="constellation-bg grid min-h-screen place-items-center px-6">
+      <InfinityBackground />
       <div className="text-center">
-        <div className="font-mono text-[11px] uppercase tracking-[0.24em] text-oz-text-dim">
+        <div className="tui-mono text-[11px] uppercase text-oz-text-dim">
           404
         </div>
-        <h1 className="mt-4 text-[44px] font-extrabold leading-[0.95] tracking-[-0.045em] text-oz-text md:text-[64px]">
+        <h1 className="mt-4 text-[44px] font-extrabold leading-[0.95] text-oz-text md:text-[64px]">
           Page not found
           <span className="text-oz-green">.</span>
         </h1>
@@ -16,9 +19,9 @@ export default function NotFound() {
         </p>
         <Link
           href="/"
-          className="mt-10 inline-flex items-center gap-1.5 font-mono text-[13px] text-oz-text-mute no-underline transition-colors hover:text-oz-green"
+          className="tui-mono mt-10 inline-flex items-center gap-1.5 text-[13px] text-oz-text-mute no-underline transition-colors hover:text-oz-green"
         >
-          <span aria-hidden>←</span>
+          <ArrowLeft aria-hidden size={14} strokeWidth={2} />
           back home
         </Link>
       </div>

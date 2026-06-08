@@ -15,7 +15,7 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0c0c0c",
+          background: "#161616",
           padding: "80px",
           position: "relative",
         }}
@@ -54,7 +54,7 @@ export default function OpenGraphImage() {
           <span>Building tools for</span>
           <span>
             learning and autonomy
-            <span style={{ color: "#00c14e" }}>.</span>
+            <span style={{ color: "#549F86" }}>.</span>
           </span>
         </div>
 
