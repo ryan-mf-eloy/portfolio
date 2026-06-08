@@ -10,7 +10,7 @@ export function TuiHero() {
         height={176}
         priority
         sizes="(min-width: 1024px) 128px, (min-width: 640px) 104px, 88px"
-        className="size-[88px] shrink-0 rounded-full object-cover ring-1 ring-oz-border sm:size-[104px] lg:size-32"
+        className="size-[88px] shrink-0 rounded-full border border-oz-border object-cover sm:size-[104px] lg:size-32"
       />
       <div className="flex min-w-0 flex-col sm:pt-3 lg:pt-4">
         <div className="tui-mono mb-4 flex items-center gap-2 text-[12px] uppercase leading-none text-oz-text-mute">
@@ -25,7 +25,7 @@ export function TuiHero() {
           <span className="tui-cursor" aria-hidden />
         </h1>
         <div className="tui-mono mt-5 flex flex-wrap items-center gap-3 text-[13px] uppercase leading-normal text-oz-text-mute sm:text-[14px]">
-          <span>Full Stack JS Developer</span>
+          <span>Senior Full Stack Developer</span>
           <span className="intro-dot" aria-hidden />
           <span>7 years</span>
         </div>

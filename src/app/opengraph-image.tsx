@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Ryan Eloy — Full Stack JS Developer";
+export const alt = "Ryan Eloy — Senior Full Stack Developer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -72,7 +72,7 @@ export default function OpenGraphImage() {
             fontFamily: "monospace",
           }}
         >
-          <span>Full Stack JS Developer · São Paulo</span>
+          <span>Senior Full Stack Developer · São Paulo</span>
           <span>Koda</span>
         </div>
       </div>

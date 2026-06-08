@@ -41,7 +41,7 @@ const SOCIALS: Social[] = [
   },
   {
     label: "Email",
-    href: "mailto:ryan.eloy.bss@gmail.com",
+    href: "mailto:developer@ryaneloy.dev",
     external: false,
     icon: <Mail aria-hidden size={18} strokeWidth={2.1} />,
   },
@@ -99,8 +99,8 @@ export function TuiContacts() {
         <InfoRow
           icon={Mail}
           label="Email"
-          value="ryan.eloy.bss@gmail.com"
-          href="mailto:ryan.eloy.bss@gmail.com"
+          value="developer@ryaneloy.dev"
+          href="mailto:developer@ryaneloy.dev"
         />
       </div>
 

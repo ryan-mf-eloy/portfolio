@@ -1,5 +1,5 @@
 const TTL_MS = 24 * 60 * 60 * 1000;
-const KEY_PREFIX = "repo-preview:";
+const KEY_PREFIX = "repo-preview:v2:";
 
 export type PreviewStatus = "loaded" | "error";
 

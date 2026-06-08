@@ -10,9 +10,7 @@ export function FloatingActions() {
     >
       <ThemeToggle />
       <a
-        href="https://wa.me/5511973041534"
-        target="_blank"
-        rel="noopener noreferrer"
+        href="mailto:developer@ryaneloy.dev"
         className="group pointer-events-auto inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-full bg-[var(--oz-button-bg)] px-5 text-[14px] font-semibold text-[var(--oz-button-text)] no-underline transition-opacity hover:opacity-90 sm:h-12 sm:px-7"
       >
         Contact me

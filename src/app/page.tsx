@@ -1,4 +1,4 @@
-import { FeaturedKoda } from "@/components/featured-koda";
+import { FeaturedProjects } from "@/components/featured-projects";
 import { FloatingActions } from "@/components/floating-actions";
 import { InfinityBackground } from "@/components/infinity-background";
 import { RecentProjects } from "@/components/recent-projects";
@@ -13,7 +13,7 @@ export default function Home() {
         <div className="grid min-h-0 flex-1 gap-10 lg:grid-cols-[minmax(420px,38%)_minmax(0,1fr)] lg:gap-16 xl:gap-20">
           <TuiCard />
           <section className="flex min-h-0 min-w-0 flex-col gap-8">
-            <FeaturedKoda />
+            <FeaturedProjects />
             <RecentProjects />
           </section>
         </div>

@@ -1,11 +1,11 @@
 {
   "basics": {
     "name": "Ryan Eloy",
-    "label": "Senior Full Stack Software Engineer",
-    "email": "ryan.eloy.bss@gmail.com",
+    "label": "Senior Full Stack Developer",
+    "email": "developer@ryaneloy.dev",
     "phone": "+55 11 97304-1534",
     "url": "https://ryaneloy.dev",
-    "summary": "Full Stack Software Engineer with 7 years of experience shipping production systems end-to-end. Specialized recently in payment gateway integrations, card processing, POS systems, and cross-border orchestration across Brazil, Mexico, and the US. Built MASP's serverless ticketing platform from scratch and delivered Bradesco Seguros' AI chatbot at scale. Comfortable across TypeScript/Node.js, React, and AWS infrastructure.",
+    "summary": "Senior Full Stack Developer with 7 years of experience turning rough ideas into production systems. Comfortable moving between product thinking, frontend, backend, and infrastructure, with recent work across payment orchestration, card processing, POS systems, ticketing platforms, and AI-powered support at scale. Known for calm technical judgment, clear communication, and ownership in ambiguous, high-stakes environments.",
     "location": {
       "city": "São Paulo",
       "region": "São Paulo",
@@ -19,7 +19,7 @@
   "work": [
     {
       "name": "Luby",
-      "position": "Senior Full Stack Software Engineer",
+      "position": "Senior Full Stack Developer",
       "location": "São Paulo, Brazil",
       "startDate": "2025-07",
       "highlights": [

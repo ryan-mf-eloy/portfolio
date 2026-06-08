@@ -22,9 +22,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ryaneloy.com";
 const SITE_NAME = "Ryan Eloy";
-const SITE_TITLE = "Ryan Eloy — Full Stack JS Developer";
+const SITE_TITLE = "Ryan Eloy — Senior Full Stack Developer";
 const SITE_DESCRIPTION =
-  "Brazilian Full Stack JavaScript developer building scalable web applications. Driven by challenges. Creator of Koda.";
+  "Senior Full Stack Developer in São Paulo building production systems across product, frontend, backend, infrastructure, payments, and AI.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -36,6 +36,7 @@ export const metadata: Metadata = {
   publisher: "Ryan Eloy",
   keywords: [
     "Ryan Eloy",
+    "senior full stack developer",
     "full stack developer",
     "javascript",
     "typescript",
@@ -94,8 +95,8 @@ const structuredData = {
   name: "Ryan Eloy",
   url: SITE_URL,
   image: `${SITE_URL}/ryan-eloy-photo.png`,
-  jobTitle: "Full Stack JavaScript Developer",
-  email: "mailto:ryan.eloy.bss@gmail.com",
+  jobTitle: "Senior Full Stack Developer",
+  email: "mailto:developer@ryaneloy.dev",
   nationality: "Brazilian",
   sameAs: [
     "https://github.com/ryan-mf-eloy",

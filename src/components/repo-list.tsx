@@ -1,38 +1,41 @@
 "use client";
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { createPortal } from "react-dom";
 import { fetchRepoPage, PER_PAGE, type Repo } from "@/lib/github";
 import { RepoRow } from "@/components/repo-row";
 import { RepoSkeleton } from "@/components/repo-skeleton";
 import { RepoTooltip } from "@/components/repo-tooltip";
 
 const TOOLTIP_WIDTH = 320;
-const TOOLTIP_EST_HEIGHT = 270;
-const TOOLTIP_PADDING = 12;
+const TOOLTIP_GAP = 14;
+const TOOLTIP_EST_HEIGHT = 392;
+const TOOLTIP_PADDING = 16;
 const TOOLTIP_EXIT_MS = 180;
 
 type HoverPhase = "enter" | "exit";
 type HoverState = { repo: Repo; style: CSSProperties; phase: HoverPhase } | null;
 
-function computeTooltipStyle(rowRect: DOMRect, panelRect: DOMRect): CSSProperties {
-  const maxLeft = Math.max(
-    TOOLTIP_PADDING,
-    panelRect.width - TOOLTIP_WIDTH - TOOLTIP_PADDING,
-  );
-  const topNearRow = rowRect.top - panelRect.top - 8;
+function computeTooltipStyle(rowRect: DOMRect): CSSProperties {
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  const width = Math.min(TOOLTIP_WIDTH, viewportWidth - TOOLTIP_PADDING * 2);
+  const maxLeft = Math.max(TOOLTIP_PADDING, viewportWidth - width - TOOLTIP_PADDING);
+  const preferredLeft = rowRect.left - width - TOOLTIP_GAP;
+  const left = Math.min(Math.max(preferredLeft, TOOLTIP_PADDING), maxLeft);
+  const preferredTop = rowRect.top + rowRect.height / 2 - TOOLTIP_EST_HEIGHT / 2;
   const maxTop = Math.max(
     TOOLTIP_PADDING,
-    panelRect.height - TOOLTIP_EST_HEIGHT - TOOLTIP_PADDING,
+    viewportHeight - TOOLTIP_EST_HEIGHT - TOOLTIP_PADDING,
   );
-
-  const top = Math.min(Math.max(topNearRow, TOOLTIP_PADDING), maxTop);
+  const top = Math.min(Math.max(preferredTop, TOOLTIP_PADDING), maxTop);
 
   return {
-    position: "absolute",
-    left: `${maxLeft}px`,
+    position: "fixed",
+    left: `${left}px`,
     top: `${top}px`,
-    width: `${TOOLTIP_WIDTH}px`,
-    zIndex: 20,
+    width: `${width}px`,
+    zIndex: 80,
   };
 }
 
@@ -43,7 +46,6 @@ export function RepoList() {
   const [hover, setHover] = useState<HoverState>(null);
 
   const listRef = useRef<HTMLUListElement>(null);
-  const panelRef = useRef<HTMLDivElement>(null);
   const pageRef = useRef(0);
   const loadingRef = useRef(false);
   const doneRef = useRef(false);
@@ -83,12 +85,23 @@ export function RepoList() {
     loadNextRef.current?.();
   }, []);
 
+  const closeTooltip = () => {
+    setHover((current) => {
+      if (!current) return null;
+      return { ...current, phase: "exit" };
+    });
+    window.clearTimeout(exitTimerRef.current);
+    exitTimerRef.current = window.setTimeout(() => {
+      if (mountedRef.current) setHover(null);
+    }, TOOLTIP_EXIT_MS);
+  };
+
   useEffect(() => {
     const el = listRef.current;
     if (!el) return;
     let ticking = false;
     const onScroll = () => {
-      if (hover) setHover(null);
+      closeTooltip();
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
@@ -104,7 +117,7 @@ export function RepoList() {
     };
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
-  }, [hover]);
+  }, []);
 
   const handleHover = (repo: Repo, el: HTMLElement) => {
     if (
@@ -113,34 +126,19 @@ export function RepoList() {
     ) {
       return;
     }
-    const panel = panelRef.current;
-    if (!panel) return;
     window.clearTimeout(exitTimerRef.current);
     setHover({
       repo,
-      style: computeTooltipStyle(
-        el.getBoundingClientRect(),
-        panel.getBoundingClientRect(),
-      ),
+      style: computeTooltipStyle(el.getBoundingClientRect()),
       phase: "enter",
     });
-  };
-  const handleLeave = () => {
-    setHover((current) => {
-      if (!current) return null;
-      return { ...current, phase: "exit" };
-    });
-    window.clearTimeout(exitTimerRef.current);
-    exitTimerRef.current = window.setTimeout(() => {
-      if (mountedRef.current) setHover(null);
-    }, TOOLTIP_EXIT_MS);
   };
 
   const showSkeleton = items.length === 0 && loading;
   const showFooter = items.length > 0 && (loading || done);
 
   return (
-    <div ref={panelRef} className="relative min-h-0 flex-1">
+    <div className="relative min-h-0 flex-1">
       <ul
         ref={listRef}
         className="repo-scroll m-0 h-full min-h-0 list-none p-0"
@@ -152,7 +150,7 @@ export function RepoList() {
               key={r.id}
               repo={r}
               onHover={(el) => handleHover(r, el)}
-              onLeave={handleLeave}
+              onLeave={closeTooltip}
             />
           ))}
         {showFooter && (
@@ -172,13 +170,14 @@ export function RepoList() {
           </li>
         )}
       </ul>
-      {hover && (
+      {hover && typeof document !== "undefined" && createPortal(
         <RepoTooltip
           key={hover.repo.id}
           repo={hover.repo}
           style={hover.style}
           phase={hover.phase}
-        />
+        />,
+        document.body,
       )}
     </div>
   );

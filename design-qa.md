@@ -58,6 +58,10 @@
 - Removed the full-width header/menu and replaced it with fixed floating top-right actions.
 - Removed shadows, blur-backed elevation, and hover lift so the final interface is flat, border-led, and minimal.
 - Reset the Infinity grid image padding to start at the viewport edge now that no header band exists.
+- Replaced the single fixed Koda feature card with an automatic GitHub-topic-driven featured projects list.
+- Added support for up to 3 featured repositories using `portfolio-featured` plus `portfolio-featured-1/2/3` topic ordering.
+- Added official local app-icon assets for Notchly and Noble, while preserving the existing Koda mark.
+- Merged known featured fallbacks into the first repository page so private/current featured projects remain represented in the infinite list.
 
 **Validation**
 - `pnpm build` passed.
@@ -76,6 +80,9 @@
 - Responsive matrix passed at 320x568, 390x844, 430x932, 768x1024, 1024x768, 1280x720, 1440x900, and 1920x1080 in light and dark: no horizontal overflow, no viewport clipping, fixed actions remain inside the viewport, and content spacing remains usable.
 - Tooltip regression passed on pointer-capable breakpoints: tooltip remains within viewport, has no shadow, and appears 12px from the active row.
 - Interaction QA passed: contact, CV download, social links, featured project link, theme toggle, keyboard focus, tooltip hover, and reduced-motion behavior.
+- GitHub topic verification passed with authenticated API: `Koda` has `portfolio-featured` + `portfolio-featured-1`, `Notchly` has `portfolio-featured` + `portfolio-featured-2`, and `noble-ios-mvp` has `portfolio-featured` + `portfolio-featured-3`.
+- Featured projects E2E passed at 1440x900, 390x844, 320x568, and 1920x1080: exactly 3 featured rows render, Koda/Notchly/Noble logos load, flat styles remain intact, and no horizontal overflow is present.
+- Repository list E2E passed: Koda, Notchly, and noble-ios-mvp are present in the first rendered repository page with dedupe.
 
 **Follow-Up Polish**
 - Optional P3: add a small real raster decorative mark near the lower-left background if closer parity with the reference image is desired.
