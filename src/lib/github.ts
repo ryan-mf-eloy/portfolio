@@ -1,4 +1,5 @@
 export const PER_PAGE = 8;
+export const MAX_REPO_PAGE = 20;
 export const FEATURED_LIMIT = 3;
 export const FEATURED_TOPIC = "portfolio-featured";
 const FEATURED_ORDER_PREFIX = "portfolio-featured-";
@@ -140,6 +141,14 @@ function demoSlice(page: number): Repo[] {
   return DEMO_REPOS.slice((page - 1) * PER_PAGE, page * PER_PAGE);
 }
 
+export function parseRepoPageParam(value: string | null): number | null {
+  if (value === null) return 1;
+  if (!/^[1-9]\d{0,2}$/.test(value)) return null;
+
+  const page = Number(value);
+  return page <= MAX_REPO_PAGE ? page : null;
+}
+
 async function fetchJsonRepos(url: string, signal?: AbortSignal): Promise<Repo[]> {
   const response = await fetch(url, { signal });
   if (!response.ok) throw new Error(`repos ${response.status}`);
@@ -251,6 +260,10 @@ export async function fetchFeaturedRepos(signal?: AbortSignal): Promise<Repo[]> 
 }
 
 export async function fetchRepoPage(page: number, signal?: AbortSignal): Promise<Repo[]> {
+  if (!Number.isInteger(page) || page < 1 || page > MAX_REPO_PAGE) {
+    return [];
+  }
+
   if (cache.has(page)) return cache.get(page)!;
   const pending = inflight.get(page);
   if (pending) return pending;

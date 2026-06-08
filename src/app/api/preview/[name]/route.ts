@@ -3,6 +3,7 @@ import { OPEN_GRAPH_IMAGE_URL } from "@/lib/github";
 const GH_USER = "ryan-mf-eloy";
 const NAME_RE = /^[A-Za-z0-9._-]{1,100}$/;
 const FIVE_MINUTES = 300;
+const PREVIEW_PROBE_TIMEOUT_MS = 2_500;
 const BRANCHES = ["master", "main"] as const;
 const PREVIEW_FILES = ["preview.png", "preview.jpg", "preview.jpeg", "preview.webp"] as const;
 
@@ -31,17 +32,23 @@ function isImageResponse(file: string, contentType: string): boolean {
 }
 
 async function probePreview(candidate: PreviewCandidate): Promise<string> {
-  const response = await fetch(candidate.url, { cache: "no-store" });
+  const response = await fetch(candidate.url, {
+    method: "HEAD",
+    cache: "no-store",
+    redirect: "follow",
+    signal: AbortSignal.timeout(PREVIEW_PROBE_TIMEOUT_MS),
+    headers: {
+      Accept: "image/avif,image/webp,image/png,image/jpeg,*/*;q=0.1",
+    },
+  });
 
   if (!response.ok) throw new Error(`preview ${response.status}`);
 
   const contentType = response.headers.get("content-type") ?? "image/png";
   if (!isImageResponse(candidate.file, contentType)) {
-    response.body?.cancel().catch(() => undefined);
     throw new Error(`preview content-type ${contentType}`);
   }
 
-  response.body?.cancel().catch(() => undefined);
   return candidate.url;
 }
 
