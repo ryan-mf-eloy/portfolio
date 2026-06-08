@@ -28,6 +28,12 @@
   --oz-focus: var(--oz-palette-blue);
   --oz-button-bg: var(--oz-palette-ink);
   --oz-button-text: #f4f4f1;
+  --repo-tooltip-bg: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.7),
+    rgba(255, 255, 255, 0.46)
+  );
+  --repo-tooltip-border: rgba(22, 22, 22, 0.14);
   --oz-font-sans: var(--font-host-grotesk), "Host Grotesk", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --oz-font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --oz-font-display: "Alliance No 2", var(--oz-font-sans);
@@ -59,6 +65,12 @@
   --oz-focus: var(--oz-palette-blue);
   --oz-button-bg: #f3f3f0;
   --oz-button-text: var(--oz-palette-ink);
+  --repo-tooltip-bg: linear-gradient(
+    145deg,
+    rgba(34, 34, 34, 0.72),
+    rgba(22, 22, 22, 0.54)
+  );
+  --repo-tooltip-border: rgba(255, 255, 255, 0.16);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,6 +95,12 @@
     --oz-focus: var(--oz-palette-blue);
     --oz-button-bg: #f3f3f0;
     --oz-button-text: var(--oz-palette-ink);
+    --repo-tooltip-bg: linear-gradient(
+      145deg,
+      rgba(34, 34, 34, 0.72),
+      rgba(22, 22, 22, 0.54)
+    );
+    --repo-tooltip-border: rgba(255, 255, 255, 0.16);
   }
 }
 
@@ -608,11 +626,19 @@ h6,
   gap: 12px;
   padding: 10px;
   pointer-events: none;
-  background: var(--oz-surface-2);
-  border: 1px solid var(--oz-border);
+  background: var(--repo-tooltip-bg);
+  border: 1px solid var(--repo-tooltip-border);
   border-radius: 14px;
+  -webkit-backdrop-filter: blur(18px) saturate(1.24);
+  backdrop-filter: blur(18px) saturate(1.24);
   transform-origin: right center;
   will-change: opacity, transform;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .repo-tooltip {
+    background: var(--oz-surface-2);
+  }
 }
 
 .repo-tooltip[data-state="enter"] {
