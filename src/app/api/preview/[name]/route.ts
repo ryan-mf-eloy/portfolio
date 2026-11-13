@@ -6,6 +6,10 @@ const FIVE_MINUTES = 300;
 const PREVIEW_PROBE_TIMEOUT_MS = 2_500;
 const BRANCHES = ["master", "main"] as const;
 const PREVIEW_FILES = ["preview.png", "preview.jpg", "preview.jpeg", "preview.webp"] as const;
+const LOCAL_PREVIEWS = new Map<string, string>([
+  ["noble", "/previews/noble.jpg"],
+  ["sidedoor", "/previews/sidedoor.png"],
+]);
 
 export const runtime = "nodejs";
 
@@ -60,6 +64,17 @@ export async function GET(
 
   if (!NAME_RE.test(name)) {
     return new Response("Bad request", { status: 400 });
+  }
+
+  const localPreview = LOCAL_PREVIEWS.get(name.toLowerCase());
+  if (localPreview) {
+    return new Response(null, {
+      status: 307,
+      headers: {
+        Location: localPreview,
+        "Cache-Control": "public, max-age=86400, s-maxage=86400",
+      },
+    });
   }
 
   try {

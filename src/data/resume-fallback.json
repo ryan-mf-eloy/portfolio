@@ -1,13 +1,13 @@
 {
   "basics": {
     "name": "Ryan Eloy",
-    "label": "Senior Full Stack Developer",
+    "label": "Senior Software Engineer",
     "email": "developer@ryaneloy.dev",
     "phone": "+55 11 97304-1534",
     "url": "https://ryaneloy.dev",
-    "summary": "Senior Full Stack Developer with 7 years of experience turning rough ideas into production systems. Comfortable moving between product thinking, frontend, backend, and infrastructure, with recent work across payment orchestration, card processing, POS systems, ticketing platforms, and AI-powered support at scale. Known for calm technical judgment, clear communication, and ownership in ambiguous, high-stakes environments.",
+    "summary": "Senior software engineer with 7 years building and operating production systems for fintech, insurance, and high-traffic consumer platforms. Works across the stack in TypeScript, Node.js, and React, with the most depth in backend: event-driven services, third-party integrations, and serverless architectures on AWS. Has shipped a conversational AI product for a multi-million-customer operation and uses AI coding agents daily within a tested, review-first workflow. Works in English with distributed international teams.",
     "location": {
-      "city": "São Paulo",
+      "city": "Jundiaí",
       "region": "São Paulo",
       "countryCode": "BR"
     },
@@ -18,124 +18,181 @@
   },
   "work": [
     {
-      "name": "Luby",
-      "position": "Senior Full Stack Developer",
-      "location": "São Paulo, Brazil",
+      "name": "Luby Software",
+      "position": "Senior Full-Stack Software Engineer",
+      "url": "https://luby.co",
+      "logo": "/companies/luby.png",
+      "summary": "International fintech client",
+      "location": "Remote",
       "startDate": "2025-07",
+      "impact": [
+        "2M+ API requests/month through a cross-border payment gateway with 13 direct acquirer integrations",
+        "Recurring card approval rate raised from 16.4% to 34.7% by fixing retry and rebill logic"
+      ],
       "highlights": [
-        "Integrated local acquirers and payment processors into a unified cross-border orchestration layer across Brazil, Mexico, and the US — handling gateway configuration, acquirer-specific parameters, and PCI compliance requirements.",
-        "Analyzed credit card transaction failure patterns to identify decline reasons; implemented retry strategies and routing optimizations to improve approval rates.",
-        "Provided data-driven research on payment routing, fraud thresholds, and market expansion to support product and business decisions.",
-        "Collaborated with international stakeholders across time zones, delivering features in agile sprints with clear technical specs and documentation."
+        "Lead contributor to four core payment services within a team of about 12, building a cross-border payment gateway with Node.js/TypeScript microservices on AWS. The gateway handles 2M+ API requests per month and supports 13 direct acquirer integrations.",
+        "Fixed retry and rebill logic for tokenized recurring card charges, contributing to segment approval rising from 16.4% to 34.7% (+18.3 percentage points). Also contributed to customer-initiated payment approval improving from 85% to 89% (+4 percentage points).",
+        "Built and evolved integrations in Brazil and Mexico: a debit-card adapter, instant-payment flows, network tokenization, and a new Mexican provider (cards, bank transfer, Apple Pay) taken from scoping to UAT certification in about 16 weeks with 93 end-to-end scenarios passing.",
+        "Investigated and fixed production issues in the payment chain, including lost webhooks and callback timeouts. Resolved a fee regression and reconciled fee data across 114k records, addressing both event-delivery failures and data-integrity issues in payment processing.",
+        "Rolled out a masked-data observability standard across card and instant-payment processing, covering four services and their shared library.",
+        "Maintained project instructions, reusable workflows, and an MCP-served knowledge index for daily use of AI coding agents (Claude Code, Cursor). Combined AI-assisted delivery with the project's 4,700+ automated tests and manual review as quality gates."
       ]
     },
     {
-      "name": "Compass UOL",
+      "name": "AIR Compass (UOL)",
       "position": "Frontend Developer",
+      "url": "https://aircompany.ai",
+      "logo": "/companies/air-compass.svg",
+      "summary": "Global automotive client",
       "location": "São Paulo, Brazil",
       "startDate": "2024-07",
       "endDate": "2025-07",
+      "impact": [
+        "Loyalty and subscription platform used across several vehicle brands of a global automotive group",
+        "Redesigned subscription screen shipped behind a flag, switchable without a deployment"
+      ],
       "highlights": [
-        "Delivered full-stack solutions for enterprise clients in the automotive sector, leading frontend implementation in Vue.js.",
-        "Contributed to code reviews and automated testing practices, improving release quality and team velocity.",
-        "Integrated Adobe Experience Manager (AEM) for content delivery, reducing publishing turnaround for marketing materials."
+        "Delivered web features for the loyalty and subscription platform of a global automotive group, used across several vehicle brands, with Vue micro-frontends on Adobe Experience Manager (AEM), GitLab CI, AWS, and Salesforce.",
+        "Built the subscription coupon flow on the web: back-office coupon registration (percentage or fixed discounts, audience targeting, global redemption limits) and coupon selection at checkout, integrated with the voucher and subscription microservices.",
+        "Shipped the redesigned subscription screen behind an authoring flag, so the new and legacy versions could run side by side and the client could switch between them without a deployment.",
+        "Created a brand theme for the shared component library with CSS custom properties and coached a teammate through the process; worked in a nine-person squad across web, back end, iOS, Android, and QA."
       ]
     },
     {
-      "name": "MASP — São Paulo Museum of Art",
-      "position": "Full Stack Developer",
+      "name": "Museu de Arte de São Paulo (MASP)",
+      "position": "Full-Stack Developer",
+      "url": "https://masp.org.br",
+      "logo": "/companies/masp.svg",
       "location": "São Paulo, Brazil",
       "startDate": "2024-03",
       "endDate": "2024-08",
+      "impact": [
+        "100k+ transactions/month on an in-house ticketing platform that replaced a costly third-party product",
+        "Thousands of concurrent users on peak event days, on Aurora PostgreSQL with RDS Proxy"
+      ],
       "highlights": [
-        "Built MASP's proprietary ticketing system from scratch — a serverless API on AWS Lambda processing thousands of monthly ticket sales and membership validations, replacing a costly third-party platform.",
-        "Developed a React Native mobile app used by staff for real-time check-in and ticket/membership card validation at museum entrances.",
-        "Integrated multiple payment gateways and POS terminals for seamless visitor checkout.",
-        "Set up auto-scaling AWS infrastructure to handle high-traffic event days with thousands of concurrent visitors; configured GCP services for reCAPTCHA and SMS Defense."
+        "Built the museum's in-house ticketing platform from scratch (Next.js, Node.js, serverless API on AWS Lambda), replacing a costly third-party product for ticket sales and membership validation at one of Latin America's leading art museums.",
+        "The platform processes 100k+ transactions per month on Aurora PostgreSQL with RDS Proxy, supporting thousands of concurrent users on peak event days.",
+        "Shipped a React Native app for real-time check-in and ticket and membership-card validation; covered critical platform flows with Jest and Playwright.",
+        "Integrated multiple payment gateways and POS terminals, and owned infrastructure and delivery across AWS and GCP (Lambda, SQS, SNS, SES, S3, CloudWatch, Docker, GitHub Actions).",
+        "Resolved race conditions in ticket purchases and seat reservations, maintaining consistent seat allocation under concurrent requests."
       ]
     },
     {
       "name": "MJV Technology & Innovation",
       "position": "Software Development Analyst",
+      "url": "https://www.mjvinnovation.com",
+      "logo": "/companies/mjv.png",
+      "summary": "Bradesco Seguros",
       "location": "São Paulo, Brazil",
       "startDate": "2021-07",
       "endDate": "2024-03",
+      "impact": [
+        "Conversational AI assistant (BIA) automating support for an insurer serving millions of customers",
+        "WhatsApp, web, and phone channels, deployed inside a regulated financial institution"
+      ],
       "highlights": [
-        "Worked on BIA, an AI-powered chatbot for Bradesco Seguros — one of Brazil's largest insurance operations, serving millions of policyholders.",
-        "Developed and maintained conversational flows integrated with IBM Watson AI, automating high-volume customer and broker support requests.",
-        "Reduced call center operational costs and average response times by handling frequent queries automatically across multiple channels.",
-        "Engineered API integrations for omnichannel support — WhatsApp, web, and phone.",
-        "Operated within a hybrid on-premise + cloud architecture meeting strict security, compliance, and data sovereignty requirements."
+        "Developed BIA, Bradesco Seguros' conversational AI assistant, using IBM Watson NLU to automate customer and broker support for an insurance operation serving millions of customers.",
+        "Built the Node.js/TypeScript services connecting the NLU engine to its channels (WhatsApp, web, and phone), with Socket.IO for real-time messaging and MongoDB for conversation data.",
+        "Delivered the hybrid on-premise and cloud deployment (Docker) that let an AI product run inside a regulated financial institution, meeting strict security, compliance, and data-sovereignty requirements.",
+        "Worked in two-week sprints with product and UX, covering services with Jest and contributing React interfaces."
       ]
     },
     {
       "name": "VBMC Consultores",
-      "position": "Full Stack Developer",
+      "position": "Full-Stack Developer",
+      "url": "https://vbmc.com.br",
+      "logo": "/companies/vbmc.png",
       "location": "Jundiaí, Brazil",
       "startDate": "2019-09",
       "endDate": "2021-07",
+      "impact": [
+        "Promoted within the first year; owned projects end to end, from requirements to deployment",
+        "Built an internal ERP from scratch, plus a meeting-recording portal and a job board"
+      ],
       "highlights": [
-        "Started as a trainee and was promoted to systems analyst within the first year.",
-        "Built an internal ERP from scratch for managing consultant activities, partner relationships, and day-to-day operations.",
-        "Developed a meeting recording portal, a job listings platform, and automated report generation tools that streamlined administrative workflows.",
-        "Delivered custom software for client companies and managed all IT infrastructure — servers, networks, and deployments."
+        "Promoted within the first year; owned projects end to end, from requirements to deployment (React, Node.js, MySQL, Docker, Linux).",
+        "Built an internal ERP from scratch, plus a meeting-recording portal, a job board, and automated reporting tools; managed client Linux servers and deployments."
       ]
     }
   ],
   "education": [
     {
-      "institution": "Cruzeiro do Sul Virtual",
-      "area": "Information Technology",
-      "studyType": "Systems Development Analyst",
-      "startDate": "2023-08",
-      "endDate": "2025-08"
+      "institution": "Cruzeiro do Sul University",
+      "area": "Systems Analysis and Development",
+      "studyType": "Associate Degree",
+      "location": "São Paulo"
     },
     {
-      "institution": "United Idiomas",
-      "area": "English as a Second Language",
-      "startDate": "2023-08",
-      "endDate": "2025-04"
-    },
-    {
-      "institution": "ETEC Antônio Vasco Venchiarutti",
-      "area": "IT / Software Technology",
-      "studyType": "Integrated Technical Course",
-      "startDate": "2017",
-      "endDate": "2019"
+      "institution": "ETEC Antonio Vasco Venchiarutti",
+      "area": "Internet Computing",
+      "studyType": "Technical Degree",
+      "location": "Jundiaí"
     }
+  ],
+  "certificates": [
+    { "name": "Claude Certified Architect – Foundations", "issuer": "Anthropic" },
+    { "name": "AI Engineering", "issuer": "Asimov Academy" },
+    { "name": "Serverless AWS", "issuer": "EW Treinamentos" },
+    { "name": "JS Expert and Automated Testing", "issuer": "EW Treinamentos" },
+    { "name": "Ignite Full-Stack Development", "issuer": "Rocketseat" },
+    { "name": "Information Security & Data Privacy", "issuer": "Corporate training" }
   ],
   "skills": [
     {
       "name": "Languages",
-      "keywords": ["TypeScript", "JavaScript", "Node.js"]
-    },
-    {
-      "name": "Frontend",
-      "keywords": ["React", "Next.js", "Vue.js", "React Native"]
+      "keywords": ["TypeScript", "JavaScript", "SQL"]
     },
     {
       "name": "Backend",
-      "keywords": ["NestJS", "GraphQL", "REST APIs", "Serverless architectures"]
-    },
-    {
-      "name": "Cloud & Infrastructure",
-      "keywords": ["AWS (Lambda, ECS, S3)", "GCP", "Docker"]
-    },
-    {
-      "name": "Domains & Practices",
       "keywords": [
-        "Cross-border payments",
-        "Payment gateway integration",
-        "PCI compliance",
-        "AI / conversational systems",
-        "Agile delivery",
-        "Code review",
-        "Automated testing"
+        "Node.js",
+        "NestJS",
+        "REST",
+        "GraphQL",
+        "Microservices",
+        "Event-driven design (webhooks, queues, idempotency, retries)"
+      ]
+    },
+    {
+      "name": "Frontend",
+      "keywords": ["React", "Next.js", "React Native", "Vue.js"]
+    },
+    {
+      "name": "Cloud & delivery",
+      "keywords": [
+        "AWS (Lambda, SQS, SNS, S3, RDS Aurora, DynamoDB, CloudWatch)",
+        "GCP",
+        "Docker",
+        "GitHub Actions",
+        "GitLab CI"
+      ]
+    },
+    {
+      "name": "Data",
+      "keywords": ["PostgreSQL", "MySQL", "MongoDB", "Redis", "DynamoDB"]
+    },
+    {
+      "name": "AI",
+      "keywords": [
+        "Conversational AI and NLU (IBM Watson)",
+        "AI-assisted development (Claude Code, Cursor)",
+        "Agent tooling with MCP"
+      ]
+    },
+    {
+      "name": "Quality",
+      "keywords": [
+        "Jest",
+        "Playwright",
+        "Cypress",
+        "Observability (CloudWatch, Grafana)",
+        "Feature flags"
       ]
     }
   ],
   "languages": [
-    { "language": "English", "fluency": "Full Professional" },
+    { "language": "English", "fluency": "Professional, used daily at work" },
     { "language": "Portuguese", "fluency": "Native" }
   ]
 }

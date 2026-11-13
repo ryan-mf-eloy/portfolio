@@ -1,3 +1,4 @@
+import { Experience } from "@/components/experience";
 import { FeaturedProjects } from "@/components/featured-projects";
 import { FloatingActions } from "@/components/floating-actions";
 import { InfinityBackground } from "@/components/infinity-background";
@@ -14,6 +15,7 @@ export default function Home() {
           <TuiCard />
           <section className="flex min-h-0 min-w-0 flex-col gap-8">
             <FeaturedProjects />
+            <Experience />
             <RecentProjects />
           </section>
         </div>

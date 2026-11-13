@@ -5,12 +5,14 @@ import Image from "next/image";
 import { useEffect, useState, type CSSProperties } from "react";
 import {
   FEATURED_FALLBACK_REPOS,
+  FEATURED_REPOS,
   fetchFeaturedRepos,
   languageColor,
   type Repo,
 } from "@/lib/github";
 
 type ProjectBrand = {
+  displayName?: string;
   logoSrc: string;
   logoAlt: string;
   accent: string;
@@ -27,22 +29,24 @@ const PROJECT_BRANDS: Record<string, ProjectBrand> = {
     iconBg: "#161616",
     fallbackDescription: "AI agent orchestration.",
   },
-  notchly: {
-    logoSrc: "/notchly-icon.png",
-    logoAlt: "Notchly app icon",
-    accent: "#000000",
-    iconBg: "#000000",
-    objectFit: "cover",
-    fallbackDescription: "Native macOS meeting assistant that lives near the MacBook notch.",
-  },
-  "noble-ios-mvp": {
+  noble: {
     logoSrc: "/noble-icon.png",
     logoAlt: "Noble app icon",
-    accent: "#ff4f1f",
-    iconBg: "#ff4f1f",
+    accent: "#4ade80",
+    iconBg: "#0d0b0a",
     objectFit: "cover",
     fallbackDescription:
-      "Sports cards platform iOS MVP — marketplace, live auctions, 3D card viewer, portfolio analytics.",
+      "Offline SwiftUI app for scanning sport cards, turning them in 3D, and posting them.",
+  },
+  sidedoor: {
+    displayName: "Sidedoor",
+    logoSrc: "/sidedoor-mark.svg",
+    logoAlt: "Sidedoor logo",
+    accent: "#3fb950",
+    iconBg: "#100e0b",
+    objectFit: "cover",
+    fallbackDescription:
+      "Local-first webhook inspector, API mock server, and realtime protocol test harness.",
   },
 };
 
@@ -110,7 +114,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
       <span className="flex min-w-0 flex-col gap-1.5">
         <span className="flex min-w-0 items-center gap-2">
           <span className="display-type truncate text-[17px] font-bold leading-snug text-oz-text">
-            {repo.name}
+            {brand.displayName ?? repo.name}
           </span>
           <span
             className="inline-block size-1.5 shrink-0 rounded-full"
@@ -160,7 +164,7 @@ export function FeaturedProjects() {
     return () => controller.abort();
   }, []);
 
-  const visibleRepos = repos.slice(0, 3);
+  const visibleRepos = repos.slice(0, FEATURED_REPOS.length);
 
   return (
     <section
@@ -181,7 +185,7 @@ export function FeaturedProjects() {
           </h2>
         </div>
         <span className="tui-mono hidden text-[12px] uppercase text-oz-text-mute sm:inline">
-          {visibleRepos.length}/3
+          {visibleRepos.length}/{FEATURED_REPOS.length}
         </span>
       </div>
 
