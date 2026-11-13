@@ -72,7 +72,7 @@ function CompanyLogo({ mark }: { mark: CompanyMark }) {
             width={44}
             height={44}
             sizes="44px"
-            className="size-full select-none object-contain"
+            className="size-full select-none object-cover"
           />
         </span>
       );
