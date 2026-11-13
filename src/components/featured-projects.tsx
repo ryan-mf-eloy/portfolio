@@ -126,7 +126,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
         <span className="tui-mono truncate text-[10.5px] uppercase text-oz-text-mute">
           {meta || "Open source"}
         </span>
-        <span className="line-clamp-2 text-[13px] leading-snug text-oz-text-mute lg:line-clamp-1">
+        <span className="line-clamp-2 text-[13px] leading-snug text-oz-text-mute">
           {repo.description || brand.fallbackDescription}
         </span>
       </span>

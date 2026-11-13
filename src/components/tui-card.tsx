@@ -7,7 +7,7 @@ export function TuiCard() {
   return (
     <section
       id="about"
-      className="flex min-h-0 scroll-mt-28 flex-col"
+      className="profile-column flex min-h-0 scroll-mt-28 flex-col"
       aria-labelledby="profile-heading"
     >
       <TuiHero />

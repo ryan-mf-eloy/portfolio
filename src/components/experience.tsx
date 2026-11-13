@@ -17,6 +17,7 @@ type WorkEntry = {
   url: string;
   logo?: string;
   headline: string;
+  description: string;
   summary?: string;
   location: string;
   startDate: string;
@@ -98,9 +99,9 @@ function CompanyLogo({ mark }: { mark: CompanyMark }) {
           <Image
             src={mark.src}
             alt=""
-            width={40}
-            height={40}
-            sizes="40px"
+            width={56}
+            height={56}
+            sizes="56px"
             className="size-full select-none object-cover"
           />
         </span>
@@ -108,7 +109,7 @@ function CompanyLogo({ mark }: { mark: CompanyMark }) {
     case "monogram":
       return (
         <span className="experience-logo experience-logo--monogram" aria-hidden="true">
-          <span className="display-type text-[14px] font-bold leading-none">
+          <span className="display-type text-[18px] font-bold leading-none">
             {mark.initials}
           </span>
         </span>
@@ -143,38 +144,36 @@ function RoleRow({
         aria-expanded={open}
         aria-controls={detailsId}
         data-open={open}
-        className="experience-role group px-5 py-2 sm:px-7"
+        className="experience-role group px-5 py-3 text-oz-text sm:px-7"
         onClick={onToggle}
       >
         <CompanyLogo mark={markFor(job)} />
-        <span className="flex min-w-0 flex-col gap-0.5">
-          <span className="flex min-w-0 items-center gap-2">
-            <span className="display-type text-[15px] font-bold leading-snug text-oz-text sm:truncate">
+
+        <span className="flex min-w-0 flex-col gap-1">
+          <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1">
+            <span className="display-type min-w-0 text-[17px] font-bold leading-snug text-oz-text sm:truncate">
               {job.name}
             </span>
             {!job.endDate && <span className="live-dot shrink-0" aria-label="Current role" />}
+            <span className="experience-metric tui-mono">{job.headline}</span>
           </span>
-          <span className="text-[13px] leading-snug text-oz-text-soft sm:truncate">
-            {job.position}
+          <span className="tui-mono flex min-w-0 flex-wrap gap-x-1.5 text-[10.5px] uppercase text-oz-text-mute sm:flex-nowrap">
+            <span className="shrink-0 whitespace-nowrap tabular-nums">
+              {formatYears(job)}
+              <span aria-hidden="true"> ·</span>
+            </span>
+            <span className="min-w-0 sm:truncate">{job.position}</span>
           </span>
-          <span className="tui-mono flex flex-wrap gap-x-2 text-[10.5px] uppercase sm:hidden">
-            <span className="tabular-nums text-oz-text-mute">{formatYears(job)}</span>
-            <span className="text-oz-green">{job.headline}</span>
-          </span>
-        </span>
-        <span className="hidden flex-col items-end gap-1 text-right sm:flex">
-          <span className="tui-mono whitespace-nowrap text-[11px] uppercase tabular-nums text-oz-text-mute">
-            {formatYears(job)}
-          </span>
-          <span className="tui-mono whitespace-nowrap text-[11px] uppercase text-oz-green">
-            {job.headline}
+          <span className="text-[13px] leading-snug text-oz-text-mute">
+            {job.description}
           </span>
         </span>
+
         <ChevronDown
           aria-hidden
-          size={16}
-          strokeWidth={2}
-          className="experience-role__chevron text-oz-text-mute"
+          size={19}
+          strokeWidth={1.9}
+          className="experience-role__chevron justify-self-end"
         />
       </button>
 
@@ -188,7 +187,7 @@ function RoleRow({
         className="experience-details"
       >
         <div className="min-h-0 overflow-hidden">
-          <div className="flex flex-col gap-2 pb-4 pl-[74px] pr-5 sm:pl-[82px] sm:pr-7">
+          <div className="flex flex-col gap-2 pb-4 pl-[90px] pr-5 sm:pl-[98px] sm:pr-7">
             <span className="tui-mono text-[10.5px] uppercase leading-relaxed text-oz-text-mute">
               {context}
             </span>
