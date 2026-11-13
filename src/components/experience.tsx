@@ -1,12 +1,22 @@
-import { ArrowUpRight } from "lucide-react";
+"use client";
+
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { useState, type CSSProperties } from "react";
 import resume from "@/data/resume-fallback.json";
+import {
+  panelId,
+  SegmentedTabs,
+  tabId,
+  type SegmentedTab,
+} from "@/components/segmented-tabs";
 
 type WorkEntry = {
   name: string;
   position: string;
   url: string;
   logo?: string;
+  headline: string;
   summary?: string;
   location: string;
   startDate: string;
@@ -23,9 +33,15 @@ type CompanyMark =
   | { kind: "logo"; src: string }
   | { kind: "monogram"; initials: string };
 
+type ExperienceTab = "roles" | "stack";
+
+const ID_PREFIX = "experience";
+const TABS: readonly SegmentedTab<ExperienceTab>[] = [
+  { id: "roles", label: "Roles" },
+  { id: "stack", label: "Stack" },
+];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const MAX_IMPACT_LINES = 2;
-const MAX_KEYWORDS_PER_GROUP = 4;
 
 const work: WorkEntry[] = resume.work;
 const skills: SkillGroup[] = resume.skills;
@@ -39,6 +55,19 @@ function formatMonth(value: string): string {
 function formatPeriod(job: WorkEntry): string {
   const end = job.endDate ? formatMonth(job.endDate) : "Present";
   return `${formatMonth(job.startDate)} – ${end}`;
+}
+
+function formatYears(job: WorkEntry): string {
+  const end = job.endDate ? job.endDate.slice(0, 4) : "Now";
+  return `${job.startDate.slice(0, 4)} — ${end}`;
+}
+
+function hostnameFor(url: string): string {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return url;
+  }
 }
 
 function initialsFor(name: string): string {
@@ -69,9 +98,9 @@ function CompanyLogo({ mark }: { mark: CompanyMark }) {
           <Image
             src={mark.src}
             alt=""
-            width={44}
-            height={44}
-            sizes="44px"
+            width={40}
+            height={40}
+            sizes="40px"
             className="size-full select-none object-cover"
           />
         </span>
@@ -79,7 +108,7 @@ function CompanyLogo({ mark }: { mark: CompanyMark }) {
     case "monogram":
       return (
         <span className="experience-logo experience-logo--monogram" aria-hidden="true">
-          <span className="display-type text-[15px] font-bold leading-none">
+          <span className="display-type text-[14px] font-bold leading-none">
             {mark.initials}
           </span>
         </span>
@@ -91,80 +120,162 @@ function CompanyLogo({ mark }: { mark: CompanyMark }) {
   }
 }
 
-function ExperienceRow({ job }: { job: WorkEntry }) {
-  const context = job.summary ?? job.location;
+function RoleRow({
+  job,
+  index,
+  open,
+  onToggle,
+}: {
+  job: WorkEntry;
+  index: number;
+  open: boolean;
+  onToggle: () => void;
+}) {
+  const buttonId = `experience-role-${index}`;
+  const detailsId = `experience-role-${index}-details`;
+  const context = [formatPeriod(job), job.summary, job.location].filter(Boolean).join(" · ");
 
   return (
-    <li className="grid grid-cols-[44px_minmax(0,1fr)] gap-x-4 px-5 py-4 sm:px-7">
-      <CompanyLogo mark={markFor(job)} />
-      <div className="flex min-w-0 flex-col gap-1">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-0.5">
-          <a
-            href={job.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex min-w-0 items-center gap-1 text-oz-text no-underline"
-          >
-            <span className="display-type text-[16px] font-bold leading-snug">
+    <li className="reveal-item" style={{ "--i": index } as CSSProperties}>
+      <button
+        type="button"
+        id={buttonId}
+        aria-expanded={open}
+        aria-controls={detailsId}
+        data-open={open}
+        className="experience-role group px-5 py-2 sm:px-7"
+        onClick={onToggle}
+      >
+        <CompanyLogo mark={markFor(job)} />
+        <span className="flex min-w-0 flex-col gap-0.5">
+          <span className="flex min-w-0 items-center gap-2">
+            <span className="display-type text-[15px] font-bold leading-snug text-oz-text sm:truncate">
               {job.name}
             </span>
-            <ArrowUpRight
-              aria-hidden
-              size={14}
-              strokeWidth={2}
-              className="shrink-0 text-oz-text-mute transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-oz-text"
-            />
-          </a>
-          <span className="tui-mono shrink-0 text-[11px] uppercase tabular-nums text-oz-text-mute">
-            {formatPeriod(job)}
+            {!job.endDate && <span className="live-dot shrink-0" aria-label="Current role" />}
           </span>
+          <span className="text-[13px] leading-snug text-oz-text-soft sm:truncate">
+            {job.position}
+          </span>
+          <span className="tui-mono flex flex-wrap gap-x-2 text-[10.5px] uppercase sm:hidden">
+            <span className="tabular-nums text-oz-text-mute">{formatYears(job)}</span>
+            <span className="text-oz-green">{job.headline}</span>
+          </span>
+        </span>
+        <span className="hidden flex-col items-end gap-1 text-right sm:flex">
+          <span className="tui-mono whitespace-nowrap text-[11px] uppercase tabular-nums text-oz-text-mute">
+            {formatYears(job)}
+          </span>
+          <span className="tui-mono whitespace-nowrap text-[11px] uppercase text-oz-green">
+            {job.headline}
+          </span>
+        </span>
+        <ChevronDown
+          aria-hidden
+          size={16}
+          strokeWidth={2}
+          className="experience-role__chevron text-oz-text-mute"
+        />
+      </button>
+
+      <div
+        id={detailsId}
+        role="region"
+        aria-labelledby={buttonId}
+        aria-hidden={!open}
+        inert={!open}
+        data-open={open}
+        className="experience-details"
+      >
+        <div className="min-h-0 overflow-hidden">
+          <div className="flex flex-col gap-2 pb-4 pl-[74px] pr-5 sm:pl-[82px] sm:pr-7">
+            <span className="tui-mono text-[10.5px] uppercase leading-relaxed text-oz-text-mute">
+              {context}
+            </span>
+            <ul className="m-0 flex list-none flex-col gap-1 p-0">
+              {job.impact.slice(0, MAX_IMPACT_LINES).map((line) => (
+                <li key={line} className="experience-impact text-[13px] leading-snug text-oz-text-soft">
+                  {line}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={job.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/link tui-mono inline-flex w-fit items-center gap-1 text-[11px] text-oz-text-mute no-underline transition-colors hover:text-oz-text"
+            >
+              {hostnameFor(job.url)}
+              <ArrowUpRight
+                aria-hidden
+                size={12}
+                strokeWidth={2}
+                className="transition-transform group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5"
+              />
+            </a>
+          </div>
         </div>
-        <p className="m-0 text-[13.5px] leading-snug text-oz-text-soft">
-          {job.position}
-          <span className="text-oz-text-mute"> · {context}</span>
-        </p>
-        <ul className="m-0 mt-1 flex list-none flex-col gap-1 p-0">
-          {job.impact.slice(0, MAX_IMPACT_LINES).map((line) => (
-            <li key={line} className="experience-impact text-[13px] leading-snug text-oz-text-mute">
-              {line}
-            </li>
-          ))}
-        </ul>
       </div>
     </li>
   );
 }
 
-function KeyTechnologies() {
+function RolesPanel() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
   return (
-    <div className="border-t border-oz-border px-5 py-4 sm:px-7">
-      <span className="tui-mono text-[11px] uppercase text-oz-text-mute">
-        Key technologies
-      </span>
-      <dl className="m-0 mt-3 grid gap-x-8 gap-y-2 sm:grid-cols-2">
-        {skills.map((group) => (
-          <div key={group.name} className="grid grid-cols-[104px_minmax(0,1fr)] items-baseline gap-3">
-            <dt className="tui-mono text-[10.5px] uppercase text-oz-text-dim">
-              {group.name}
-            </dt>
-            <dd className="tui-mono m-0 flex flex-wrap gap-x-2 text-[12px] leading-relaxed text-oz-text-soft">
-              {group.keywords.slice(0, MAX_KEYWORDS_PER_GROUP).map((keyword, index, list) => (
-                <span key={keyword} className="whitespace-nowrap">
-                  {shortKeyword(keyword)}
-                  {index < list.length - 1 && (
-                    <span className="ml-2 text-oz-text-dim" aria-hidden="true">·</span>
-                  )}
-                </span>
-              ))}
-            </dd>
-          </div>
-        ))}
-      </dl>
-    </div>
+    <ol className="m-0 list-none divide-y divide-oz-border p-0">
+      {work.map((job, index) => (
+        <RoleRow
+          key={job.name}
+          job={job}
+          index={index}
+          open={openIndex === index}
+          onToggle={() => setOpenIndex((current) => (current === index ? null : index))}
+        />
+      ))}
+    </ol>
   );
 }
 
+function StackPanel() {
+  return (
+    <dl className="m-0 flex flex-col gap-3 px-5 py-4 sm:px-7">
+      {skills.map((group, index) => (
+        <div
+          key={group.name}
+          className="reveal-item grid gap-1.5 sm:grid-cols-[124px_minmax(0,1fr)] sm:items-baseline sm:gap-4"
+          style={{ "--i": index } as CSSProperties}
+        >
+          <dt className="tui-mono text-[10.5px] uppercase text-oz-text-dim">{group.name}</dt>
+          <dd className="m-0 flex flex-wrap gap-1.5">
+            {group.keywords.map((keyword) => (
+              <span key={keyword} className="stack-pill tui-mono" title={keyword}>
+                {shortKeyword(keyword)}
+              </span>
+            ))}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
+function ActivePanel({ tab }: { tab: ExperienceTab }) {
+  switch (tab) {
+    case "roles":
+      return <RolesPanel />;
+    case "stack":
+      return <StackPanel />;
+    default: {
+      const unreachable: never = tab;
+      return unreachable;
+    }
+  }
+}
+
 export function Experience() {
+  const [tab, setTab] = useState<ExperienceTab>("roles");
   const firstYear = work.at(-1)?.startDate.slice(0, 4);
 
   return (
@@ -173,10 +284,10 @@ export function Experience() {
       className="glass-panel flex scroll-mt-28 flex-col overflow-hidden rounded-[16px]"
       aria-labelledby="experience-title"
     >
-      <div className="flex shrink-0 items-center justify-between gap-4 border-b border-oz-border px-5 py-4 sm:px-7">
+      <div className="flex shrink-0 items-center justify-between gap-4 border-b border-oz-border px-5 py-3.5 sm:px-7">
         <div className="flex min-w-0 flex-col gap-1.5">
           <span className="tui-mono text-[11px] uppercase text-oz-text-mute">
-            Career
+            Career{firstYear && ` · since ${firstYear}`}
           </span>
           <h2
             id="experience-title"
@@ -185,20 +296,25 @@ export function Experience() {
             Experience
           </h2>
         </div>
-        {firstYear && (
-          <span className="tui-mono hidden text-[12px] uppercase text-oz-text-mute sm:inline">
-            Since {firstYear}
-          </span>
-        )}
+        <SegmentedTabs
+          idPrefix={ID_PREFIX}
+          label="Experience views"
+          tabs={TABS}
+          value={tab}
+          onChange={setTab}
+        />
       </div>
 
-      <ol className="m-0 list-none divide-y divide-oz-border p-0">
-        {work.map((job) => (
-          <ExperienceRow key={job.name} job={job} />
-        ))}
-      </ol>
-
-      <KeyTechnologies />
+      <div
+        key={tab}
+        role="tabpanel"
+        id={panelId(ID_PREFIX, tab)}
+        aria-labelledby={tabId(ID_PREFIX, tab)}
+        className="tab-panel"
+        data-active="true"
+      >
+        <ActivePanel tab={tab} />
+      </div>
     </section>
   );
 }

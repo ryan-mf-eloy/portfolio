@@ -85,6 +85,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
   const style = {
     "--project-accent": brand.accent,
     "--project-icon-bg": brand.iconBg,
+    "--i": index,
   } as CSSProperties;
 
   return (
@@ -92,7 +93,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
       href={hrefFor(repo)}
       target="_blank"
       rel="noopener noreferrer"
-      className="featured-project-row group px-5 py-3.5 text-oz-text no-underline sm:px-7"
+      className="featured-project-row reveal-item group px-5 py-3 text-oz-text no-underline sm:px-7"
       style={style}
     >
       <span
@@ -111,7 +112,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
         />
       </span>
 
-      <span className="flex min-w-0 flex-col gap-1.5">
+      <span className="flex min-w-0 flex-col gap-1">
         <span className="flex min-w-0 items-center gap-2">
           <span className="display-type truncate text-[17px] font-bold leading-snug text-oz-text">
             {brand.displayName ?? repo.name}
@@ -125,7 +126,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
         <span className="tui-mono truncate text-[10.5px] uppercase text-oz-text-mute">
           {meta || "Open source"}
         </span>
-        <span className="line-clamp-2 text-[13px] leading-snug text-oz-text-mute">
+        <span className="line-clamp-2 text-[13px] leading-snug text-oz-text-mute lg:line-clamp-1">
           {repo.description || brand.fallbackDescription}
         </span>
       </span>
@@ -148,7 +149,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
   );
 }
 
-export function FeaturedProjects() {
+export function FeaturedProjectList() {
   const [repos, setRepos] = useState<Repo[]>(FEATURED_FALLBACK_REPOS);
 
   useEffect(() => {
@@ -164,36 +165,11 @@ export function FeaturedProjects() {
     return () => controller.abort();
   }, []);
 
-  const visibleRepos = repos.slice(0, FEATURED_REPOS.length);
-
   return (
-    <section
-      id="projects"
-      className="glass-panel flex scroll-mt-28 flex-col overflow-hidden rounded-[16px]"
-      aria-labelledby="featured-title"
-    >
-      <div className="flex shrink-0 items-center justify-between gap-4 border-b border-oz-border px-5 py-4 sm:px-7">
-        <div className="flex min-w-0 flex-col gap-1.5">
-          <span className="tui-mono text-[11px] uppercase text-oz-text-mute">
-            Featured
-          </span>
-          <h2
-            id="featured-title"
-            className="display-type text-[24px] font-bold leading-none text-oz-text sm:text-[26px]"
-          >
-            Featured projects
-          </h2>
-        </div>
-        <span className="tui-mono hidden text-[12px] uppercase text-oz-text-mute sm:inline">
-          {visibleRepos.length}/{FEATURED_REPOS.length}
-        </span>
-      </div>
-
-      <div className="divide-y divide-oz-border">
-        {visibleRepos.map((repo, index) => (
-          <FeaturedProjectRow key={repo.id} repo={repo} index={index} />
-        ))}
-      </div>
-    </section>
+    <div className="divide-y divide-oz-border">
+      {repos.slice(0, FEATURED_REPOS.length).map((repo, index) => (
+        <FeaturedProjectRow key={repo.id} repo={repo} index={index} />
+      ))}
+    </div>
   );
 }
