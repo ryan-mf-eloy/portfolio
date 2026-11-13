@@ -517,8 +517,6 @@ h6,
   height: 44px;
   place-items: center;
   overflow: hidden;
-  background: #ffffff;
-  border: 1px solid var(--oz-border-strong);
   border-radius: 12px;
 }
 
