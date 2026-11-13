@@ -105,6 +105,8 @@
 }
 
 @theme inline {
+  --color-background: var(--oz-bg);
+  --color-foreground: var(--oz-text);
   --color-oz-bg: var(--oz-bg);
   --color-oz-bg-2: var(--oz-bg-2);
   --color-oz-surface: var(--oz-surface);
@@ -169,7 +171,7 @@ h6,
   background: var(--oz-bg);
 }
 
-.constellation-bg > :not(.infinity-bg-grid):not(.floating-actions) {
+.constellation-bg > :not(.infinity-bg-grid):not(.ambient-layer):not(.floating-actions) {
   position: relative;
   z-index: 1;
 }
@@ -196,6 +198,14 @@ h6,
 
 .infinity-bg-grid.mobile {
   display: none;
+}
+
+.ambient-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 :root[data-theme="dark"] .infinity-bg-grid {
