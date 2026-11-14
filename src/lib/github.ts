@@ -1,8 +1,6 @@
 export const PER_PAGE = 8;
 export const MAX_REPO_PAGE = 20;
-export const FEATURED_LIMIT = 3;
-export const FEATURED_TOPIC = "portfolio-featured";
-const FEATURED_ORDER_PREFIX = "portfolio-featured-";
+export const FEATURED_REPOS = ["Koda", "Noble", "sidedoor"] as const;
 const GH_USER = "ryan-mf-eloy";
 
 export type Repo = {
@@ -78,31 +76,32 @@ export const FEATURED_FALLBACK_REPOS: Repo[] = [
     homepage: "https://koda.ryaneloy.dev",
     updated_at: "2026-06-08T01:35:50Z",
     archived: false,
-    topics: [FEATURED_TOPIC, "portfolio-featured-1"],
+    topics: [],
   },
   {
-    id: 1251827011,
-    name: "Notchly",
-    description: "Native macOS meeting assistant that lives near the MacBook notch.",
+    id: 1457179699,
+    name: "Noble",
+    description: "Offline SwiftUI app for scanning sport cards, turning them in 3D, and posting them.",
     language: "Swift",
     stars: 0,
-    url: "https://github.com/ryan-mf-eloy/Notchly",
+    url: "https://github.com/ryan-mf-eloy/Noble",
     homepage: null,
-    updated_at: "2026-06-08T01:35:50Z",
+    updated_at: "2026-11-13T22:54:46Z",
     archived: false,
-    topics: [FEATURED_TOPIC, "portfolio-featured-2"],
+    topics: [],
   },
   {
-    id: 1233365086,
-    name: "noble-ios-mvp",
-    description: "Sports cards platform iOS MVP — marketplace, live auctions, 3D card viewer, portfolio analytics.",
-    language: "Swift",
+    id: 1291657028,
+    name: "sidedoor",
+    description:
+      "Local-first webhook inspector, API mock server, and realtime protocol test harness (HTTP, WebSocket, Socket.IO, GraphQL) with Tailscale Funnel.",
+    language: "JavaScript",
     stars: 0,
-    url: "https://github.com/ryan-mf-eloy/noble-ios-mvp",
+    url: "https://github.com/ryan-mf-eloy/sidedoor",
     homepage: null,
-    updated_at: "2026-06-08T01:35:51Z",
+    updated_at: "2026-11-13T23:04:43Z",
     archived: false,
-    topics: [FEATURED_TOPIC, "portfolio-featured-3"],
+    topics: [],
   },
 ];
 
@@ -170,41 +169,28 @@ function normalize(raw: RawRepo): Repo {
   };
 }
 
-function featuredOrder(repo: Repo): number {
-  const rankTopic = repo.topics.find((topic) =>
-    topic.toLowerCase().startsWith(FEATURED_ORDER_PREFIX),
+function featuredFallback(name: string): Repo | undefined {
+  return FEATURED_FALLBACK_REPOS.find(
+    (repo) => repo.name.toLowerCase() === name.toLowerCase(),
   );
-  const rank = rankTopic ? Number(rankTopic.slice(FEATURED_ORDER_PREFIX.length)) : NaN;
-  return Number.isFinite(rank) && rank > 0 ? rank : Number.MAX_SAFE_INTEGER;
 }
 
-function isFeaturedRepo(repo: Repo): boolean {
-  return repo.topics.some((topic) => topic.toLowerCase() === FEATURED_TOPIC);
-}
+async function fetchFeaturedRepo(name: string, signal?: AbortSignal): Promise<Repo | undefined> {
+  try {
+    const url = `https://api.github.com/repos/${encodeURIComponent(GH_USER)}/${encodeURIComponent(name)}`;
+    const response = await fetch(url, {
+      headers: { Accept: "application/vnd.github+json" },
+      signal,
+    });
 
-function sortFeaturedRepos(repos: Repo[]): Repo[] {
-  return repos
-    .filter(isFeaturedRepo)
-    .sort((a, b) => {
-      const rankDiff = featuredOrder(a) - featuredOrder(b);
-      if (rankDiff !== 0) return rankDiff;
-      return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
-    })
-    .slice(0, FEATURED_LIMIT);
-}
+    if (!response.ok) throw new Error(`gh featured ${name} ${response.status}`);
 
-function mergeFeaturedRepos(repos: Repo[]): Repo[] {
-  const byName = new Map<string, Repo>();
-
-  for (const repo of FEATURED_FALLBACK_REPOS) {
-    byName.set(repo.name.toLowerCase(), repo);
+    return normalize((await response.json()) as RawRepo);
+  } catch (err: unknown) {
+    if (err instanceof DOMException && err.name === "AbortError") throw err;
+    console.warn(`[github] featured fetch for ${name} failed, using fallback data:`, err);
+    return featuredFallback(name);
   }
-
-  for (const repo of repos) {
-    byName.set(repo.name.toLowerCase(), repo);
-  }
-
-  return sortFeaturedRepos([...byName.values()]);
 }
 
 function mergeFeaturedFallbackIntoPage(repos: Repo[]): Repo[] {
@@ -234,29 +220,10 @@ export async function fetchFeaturedRepos(signal?: AbortSignal): Promise<Repo[]> 
     }
   }
 
-  const collected: Repo[] = [];
-
-  try {
-    for (let page = 1; page <= 3; page += 1) {
-      const url = `https://api.github.com/users/${encodeURIComponent(GH_USER)}/repos?per_page=100&sort=updated&page=${page}`;
-      const response = await fetch(url, {
-        headers: { Accept: "application/vnd.github+json" },
-        signal,
-      });
-
-      if (!response.ok) throw new Error(`gh featured ${response.status}`);
-
-      const raw: RawRepo[] = await response.json();
-      collected.push(...raw.filter((repo) => !repo.fork).map(normalize));
-      if (raw.length < 100) break;
-    }
-
-    return mergeFeaturedRepos(collected);
-  } catch (err: unknown) {
-    if (err instanceof DOMException && err.name === "AbortError") throw err;
-    console.warn("[github] featured fetch failed, using fallback data:", err);
-    return FEATURED_FALLBACK_REPOS;
-  }
+  const repos = await Promise.all(
+    FEATURED_REPOS.map((name) => fetchFeaturedRepo(name, signal)),
+  );
+  return repos.filter((repo): repo is Repo => repo !== undefined);
 }
 
 export async function fetchRepoPage(page: number, signal?: AbortSignal): Promise<Repo[]> {

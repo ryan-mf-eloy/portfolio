@@ -5,12 +5,14 @@ import Image from "next/image";
 import { useEffect, useState, type CSSProperties } from "react";
 import {
   FEATURED_FALLBACK_REPOS,
+  FEATURED_REPOS,
   fetchFeaturedRepos,
   languageColor,
   type Repo,
 } from "@/lib/github";
 
 type ProjectBrand = {
+  displayName?: string;
   logoSrc: string;
   logoAlt: string;
   accent: string;
@@ -27,22 +29,24 @@ const PROJECT_BRANDS: Record<string, ProjectBrand> = {
     iconBg: "#161616",
     fallbackDescription: "AI agent orchestration.",
   },
-  notchly: {
-    logoSrc: "/notchly-icon.png",
-    logoAlt: "Notchly app icon",
-    accent: "#000000",
-    iconBg: "#000000",
-    objectFit: "cover",
-    fallbackDescription: "Native macOS meeting assistant that lives near the MacBook notch.",
-  },
-  "noble-ios-mvp": {
+  noble: {
     logoSrc: "/noble-icon.png",
     logoAlt: "Noble app icon",
-    accent: "#ff4f1f",
-    iconBg: "#ff4f1f",
+    accent: "#4ade80",
+    iconBg: "#0d0b0a",
     objectFit: "cover",
     fallbackDescription:
-      "Sports cards platform iOS MVP — marketplace, live auctions, 3D card viewer, portfolio analytics.",
+      "Offline SwiftUI app for scanning sport cards, turning them in 3D, and posting them.",
+  },
+  sidedoor: {
+    displayName: "Sidedoor",
+    logoSrc: "/sidedoor-mark.svg",
+    logoAlt: "Sidedoor logo",
+    accent: "#3fb950",
+    iconBg: "#100e0b",
+    objectFit: "cover",
+    fallbackDescription:
+      "Local-first webhook inspector, API mock server, and realtime protocol test harness.",
   },
 };
 
@@ -81,6 +85,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
   const style = {
     "--project-accent": brand.accent,
     "--project-icon-bg": brand.iconBg,
+    "--i": index,
   } as CSSProperties;
 
   return (
@@ -88,7 +93,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
       href={hrefFor(repo)}
       target="_blank"
       rel="noopener noreferrer"
-      className="featured-project-row group px-5 py-3.5 text-oz-text no-underline sm:px-7"
+      className="featured-project-row reveal-item group px-5 py-3 text-oz-text no-underline sm:px-7"
       style={style}
     >
       <span
@@ -107,10 +112,10 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
         />
       </span>
 
-      <span className="flex min-w-0 flex-col gap-1.5">
+      <span className="flex min-w-0 flex-col gap-1">
         <span className="flex min-w-0 items-center gap-2">
           <span className="display-type truncate text-[17px] font-bold leading-snug text-oz-text">
-            {repo.name}
+            {brand.displayName ?? repo.name}
           </span>
           <span
             className="inline-block size-1.5 shrink-0 rounded-full"
@@ -144,7 +149,7 @@ function FeaturedProjectRow({ repo, index }: { repo: Repo; index: number }) {
   );
 }
 
-export function FeaturedProjects() {
+export function FeaturedProjectList() {
   const [repos, setRepos] = useState<Repo[]>(FEATURED_FALLBACK_REPOS);
 
   useEffect(() => {
@@ -160,36 +165,11 @@ export function FeaturedProjects() {
     return () => controller.abort();
   }, []);
 
-  const visibleRepos = repos.slice(0, 3);
-
   return (
-    <section
-      id="projects"
-      className="glass-panel flex scroll-mt-28 flex-col overflow-hidden rounded-[16px]"
-      aria-labelledby="featured-title"
-    >
-      <div className="flex shrink-0 items-center justify-between gap-4 border-b border-oz-border px-5 py-4 sm:px-7">
-        <div className="flex min-w-0 flex-col gap-1.5">
-          <span className="tui-mono text-[11px] uppercase text-oz-text-mute">
-            Featured
-          </span>
-          <h2
-            id="featured-title"
-            className="display-type text-[24px] font-bold leading-none text-oz-text sm:text-[26px]"
-          >
-            Featured projects
-          </h2>
-        </div>
-        <span className="tui-mono hidden text-[12px] uppercase text-oz-text-mute sm:inline">
-          {visibleRepos.length}/3
-        </span>
-      </div>
-
-      <div className="divide-y divide-oz-border">
-        {visibleRepos.map((repo, index) => (
-          <FeaturedProjectRow key={repo.id} repo={repo} index={index} />
-        ))}
-      </div>
-    </section>
+    <div className="divide-y divide-oz-border">
+      {repos.slice(0, FEATURED_REPOS.length).map((repo, index) => (
+        <FeaturedProjectRow key={repo.id} repo={repo} index={index} />
+      ))}
+    </div>
   );
 }

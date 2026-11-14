@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
+import resume from "@/data/resume-fallback.json";
 
-export const alt = "Ryan Eloy — Senior Full Stack Developer";
+export const alt = `Ryan Eloy — ${resume.basics.label}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -72,7 +73,7 @@ export default function OpenGraphImage() {
             fontFamily: "monospace",
           }}
         >
-          <span>Senior Full Stack Developer · São Paulo</span>
+          <span>{resume.basics.label} · São Paulo</span>
           <span>Koda</span>
         </div>
       </div>

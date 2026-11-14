@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Host_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import resume from "@/data/resume-fallback.json";
 import "./globals.css";
 
 const hostGrotesk = Host_Grotesk({
@@ -22,9 +23,9 @@ const ibmPlexMono = IBM_Plex_Mono({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ryaneloy.com";
 const SITE_NAME = "Ryan Eloy";
-const SITE_TITLE = "Ryan Eloy — Senior Full Stack Developer";
+const SITE_TITLE = `Ryan Eloy — ${resume.basics.label}`;
 const SITE_DESCRIPTION =
-  "Senior Full Stack Developer in São Paulo building production systems across product, frontend, backend, infrastructure, payments, and AI.";
+  `${resume.basics.label} in São Paulo building production systems across product, frontend, backend, infrastructure, payments, and AI.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
   publisher: "Ryan Eloy",
   keywords: [
     "Ryan Eloy",
-    "senior full stack developer",
+    "senior software engineer",
     "full stack developer",
     "javascript",
     "typescript",
@@ -95,7 +96,7 @@ const structuredData = {
   name: "Ryan Eloy",
   url: SITE_URL,
   image: `${SITE_URL}/ryan-eloy-photo.png`,
-  jobTitle: "Senior Full Stack Developer",
+  jobTitle: resume.basics.label,
   email: "mailto:developer@ryaneloy.dev",
   nationality: "Brazilian",
   sameAs: [

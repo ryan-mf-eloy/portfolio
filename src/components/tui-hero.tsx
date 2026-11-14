@@ -1,4 +1,5 @@
 import Image from "next/image";
+import resume from "@/data/resume-fallback.json";
 
 export function TuiHero() {
   return (
@@ -25,7 +26,7 @@ export function TuiHero() {
           <span className="tui-cursor" aria-hidden />
         </h1>
         <div className="tui-mono mt-5 flex flex-wrap items-center gap-3 text-[13px] uppercase leading-normal text-oz-text-mute sm:text-[14px]">
-          <span>Senior Full Stack Developer</span>
+          <span>{resume.basics.label}</span>
           <span className="intro-dot" aria-hidden />
           <span>7 years</span>
         </div>
